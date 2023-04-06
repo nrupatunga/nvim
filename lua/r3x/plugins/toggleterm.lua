@@ -45,11 +45,11 @@ return {
 
         vim.api.nvim_set_keymap("n", "<leader>lg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", { noremap = true, silent = true })
 
-        function _HTOP_TOGGLE()
-            local htop = Terminal:new({ cmd = "htop", hidden = true, dir = vim.fn.getcwd() })
-            htop:toggle()
-        end
-        vim.api.nvim_set_keymap("n", "<leader>ht", "<cmd>lua _HTOP_TOGGLE()<CR>", { noremap = true, silent = true })
+        --function _HTOP_TOGGLE()
+            --local htop = Terminal:new({ cmd = "htop", hidden = true, dir = vim.fn.getcwd() })
+            --htop:toggle()
+        --end
+        --vim.api.nvim_set_keymap("n", "<leader>ht", "<cmd>lua _HTOP_TOGGLE()<CR>", { noremap = true, silent = true })
 
         function _IPYTHON_TOGGLE()
             local python = Terminal:new({ cmd = "ipython", hidden = true, dir = vim.fn.getcwd() })

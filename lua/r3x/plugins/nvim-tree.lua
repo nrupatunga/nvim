@@ -5,7 +5,7 @@ return {
     },
     cmd = { "NvimTreeToggle" },
     keys = {
-        { "<leader>e", "<cmd>NvimTreeToggle<CR>" },
+        { "<leader>e", "<cmd>NvimTreeToggle<CR>" , desc = 'NvimTree toggle'},
     },
     opts = {
         view = {

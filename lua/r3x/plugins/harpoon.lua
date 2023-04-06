@@ -10,7 +10,7 @@ return {
             desc = "Harpoon mark",
         },
         {
-            "<leader>h",
+            "<leader>ho",
             function()
                 require("harpoon.ui").toggle_quick_menu()
             end,
