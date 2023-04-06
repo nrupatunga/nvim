@@ -39,9 +39,6 @@ keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 
--- term mode
-keymap("t", "<esc>", "<C-\\><C-n>", opts) -- go back to normal mode with <esc> on terminal mode
-
 -- search and replace
 keymap("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], opts)
 
@@ -54,15 +51,6 @@ keymap("v", "p", '"_dP')
 -- Stay in indent mode
 keymap("v", "<", "<gv")
 keymap("v", ">", ">gv")
-
--- plugin keymaps
--- hop.nvim
-keymap("n", "<leader><leader>w", ":HopWord<CR>")
-keymap("n", "<leader><leader>b", ":HopWordBC<CR>")
-keymap("n", "<leader><leader>p", ":HopPattern<CR>")
-
--- nvimtree
-keymap("n", "<leader>e", ":NvimTreeToggle<CR>")
 
 -- Move text up and down, only works in visual mode, other mode, since
 -- xmonad conflicts, we havent mappend it yet

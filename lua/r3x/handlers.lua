@@ -137,7 +137,7 @@ M.on_attach = function(client, bufnr)
 
     require("illuminate").on_attach(client)
     require("lsp_signature").on_attach(signature_cfg, bufnr)
-    require("nvim-navbuddy").attach(client, bufnr)
+    --require("nvim-navbuddy").attach(client, bufnr)
 end
 
 return M

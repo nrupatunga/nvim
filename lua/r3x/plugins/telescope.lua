@@ -33,6 +33,7 @@ return {
         { "<leader>T", "<cmd>Telescope treesitter<CR>", desc = "List Treesitter Variables" },
         { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "Git status" },
         { "<leader>gt", "<cmd>Telescope git_branches<CR>", desc = "Git branches" },
+        { "<leader>k", "<cmd>Telescope keymaps<CR>", desc = "List all keymaps" },
     },
     config = function()
         local scope = require("telescope")
