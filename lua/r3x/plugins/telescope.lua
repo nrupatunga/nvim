@@ -28,7 +28,7 @@ return {
 	    "<cmd>lua require'telescope.builtin'.oldfiles(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
             desc = "Shows old files opened",
         },
-        { "<leader>g", "<cmd>Telescope live_grep<CR>", desc = "Find texts" },
+        { "<leader>gr", "<cmd>Telescope live_grep<CR>", desc = "Find texts" },
         { "<leader>b", "<cmd>Telescope buffers<CR>", desc = "List Opened Buffers" },
         { "<leader>T", "<cmd>Telescope treesitter<CR>", desc = "List Treesitter Variables" },
         { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "Git status" },
