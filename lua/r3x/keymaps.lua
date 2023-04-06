@@ -81,10 +81,3 @@ function _G.toggle_diagnostics()
 end
 
 keymap("n", "<leader>D", ":call v:lua.toggle_diagnostics()<CR>", { silent = true, noremap = true })
-
--- toggleterm
--- lazygit
-keymap("n", "<leader>lg", ":call v:lua._LAZYGIT_TOGGLE()<CR>", { silent = true, noremap = true })
---
-keymap("n", "<leader>lt", ":call v:lua._HTOP_TOGGLE()<CR>", { silent = true, noremap = true })
-keymap("n", "<leader>ll", ":call v:lua._PYTHON_TOGGLE()<CR>", { silent = true, noremap = true })
