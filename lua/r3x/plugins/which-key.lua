@@ -1,6 +1,6 @@
 return {
     "folke/which-key.nvim",
-    event = "BufReadPre",
+    event = "VeryLazy",
     config = function()
         -- disable hints for certain operators
         local presets = require("which-key.plugins.presets")
