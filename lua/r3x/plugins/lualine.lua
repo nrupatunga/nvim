@@ -1,5 +1,6 @@
 return {
     "edr3x/lualine.nvim",
+    event = "BufReadPre",
     config = function()
         local lspStatus = {
             function()
@@ -17,21 +18,21 @@ return {
                 end
                 return msg
             end,
-	    icon = " ",
+            icon = " ",
             color = { fg = "#d3d3d3" },
         }
 
         --local buffer = {
-            --"buffers",
-            --mode = 0,
-            --show_filename_only = true,
-            --show_modified_status = true,
-            --hide_filename_extension = false,
-            --symbols = { alternate_file = "" },
-            --buffers_color = {
-                --active = { fg = "#d3d3d3" },
-                --inactive = { fg = "#414141" },
-            --},
+        --"buffers",
+        --mode = 0,
+        --show_filename_only = true,
+        --show_modified_status = true,
+        --hide_filename_extension = false,
+        --symbols = { alternate_file = "" },
+        --buffers_color = {
+        --active = { fg = "#d3d3d3" },
+        --inactive = { fg = "#414141" },
+        --},
         --}
 
         require("lualine").setup({
@@ -47,6 +48,7 @@ return {
             sections = {
                 lualine_a = { "mode" },
                 lualine_b = { "branch" },
+                lualine_c = { "" },
                 lualine_x = { "diff", "diagnostics" },
                 lualine_y = { lspStatus, "filetype" },
                 lualine_z = { "progress" },
