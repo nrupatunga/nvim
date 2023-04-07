@@ -54,4 +54,4 @@ vim.cmd("highlight   PmenuThumb    ctermfg=0 ctermbg=7")
 
 vim.cmd("hi Search ctermbg=yellow")
 vim.cmd("hi Search ctermfg=Red")
---vim.cmd("set winbar=%f%m")
+vim.cmd("set winbar=%f%m")
