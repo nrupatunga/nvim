@@ -13,7 +13,7 @@ return {
         "neovim/nvim-lspconfig",
         dependencies = {
             "ray-x/lsp_signature.nvim",
-            "RRethy/vim-illuminate",
+	    "RRethy/vim-illuminate",
         },
         event = "BufReadPre",
         config = function()

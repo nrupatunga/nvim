@@ -4,15 +4,15 @@ return {
         event = "BufReadPre",
     },
     {
-        "github/copilot.vim",
-        event = "InsertEnter",
+        "christoomey/vim-tmux-navigator",
+        event = "VeryLazy",
     },
     {
         "edr3x/better-escape.nvim",
         event = "BufReadPre",
         opts = {
             --mapping = { "jk", "kj", "JK", "KJ", "jK", "kJ", "Jk", "Kj" },
-            mapping = { "jk"},
+            mapping = { "jk" },
             timeout = vim.o.timeoutlen,
             clear_empty_lines = false,
             keys = "<Esc>",

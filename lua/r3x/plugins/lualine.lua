@@ -46,12 +46,14 @@ return {
                 globalstatus = true,
             },
             sections = {
-                lualine_a = { "mode" },
+                --lualine_a = { "mode" },
+                lualine_a = { "" },
                 lualine_b = { "branch" },
                 lualine_c = { "" },
                 lualine_x = { "diff", "diagnostics" },
                 lualine_y = { lspStatus, "filetype" },
-                lualine_z = { "progress" },
+                --lualine_z = { "progress" },
+                lualine_z = { "" },
             },
         })
     end,
