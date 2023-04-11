@@ -15,7 +15,7 @@ keymap("n", "<C-u>", "<C-u>zz")
 
 -- because im lazy
 keymap("n", "<C-a>", "ggVG", opts)
-keymap("n", "<leader><ESC>", "<cmd>qa<CR>", opts)
+keymap("n", "<leader><ESC>", "<cmd>q<CR>", opts)
 
 -- buffer
 keymap("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = "Close current buffer" })
