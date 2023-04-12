@@ -1,5 +1,5 @@
 return {
-    "edr3x/lualine.nvim",
+    "nvim-lualine/lualine.nvim",
     event = "BufReadPre",
     config = function()
         local lspStatus = {
@@ -51,7 +51,8 @@ return {
                 lualine_b = { "branch" },
                 lualine_c = { "" },
                 lualine_x = { "diff", "diagnostics" },
-                lualine_y = { lspStatus, "filetype" },
+                lualine_y = { lspStatus },
+                --lualine_y = { lspStatus, "filetype" },
                 --lualine_z = { "progress" },
                 lualine_z = { "" },
             },

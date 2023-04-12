@@ -5,27 +5,27 @@ return {
     keys = {
         {
             "<leader>f",
-	    "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
+            "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
             desc = "Find files",
         },
         {
             "<leader>F",
-	    "<cmd>lua require'telescope.builtin'.git_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
+            "<cmd>lua require'telescope.builtin'.git_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
             desc = "Find git files",
         },
         {
             "<leader>y",
-	    "<cmd>lua require'telescope.builtin'.marks(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
+            "<cmd>lua require'telescope.builtin'.marks(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
             desc = "Shows marks",
         },
         {
             "<leader>t",
-	    "<cmd>lua require'telescope.builtin'.lsp_document_symbols(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
+            "<cmd>lua require'telescope.builtin'.lsp_document_symbols(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
             desc = "Shows document symbols",
         },
         {
             "<leader>o",
-	    "<cmd>lua require'telescope.builtin'.oldfiles(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
+            "<cmd>lua require'telescope.builtin'.oldfiles(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
             desc = "Shows old files opened",
         },
         { "<leader>gr", "<cmd>Telescope live_grep<CR>", desc = "Find texts" },
