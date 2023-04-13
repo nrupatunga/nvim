@@ -4,6 +4,7 @@ return {
     dependencies = {
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-path",
+        "hrsh7th/cmp-buffer",
         "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
         "hrsh7th/cmp-nvim-lsp-signature-help",
@@ -114,11 +115,18 @@ return {
             preselect = cmp.PreselectMode.None,
             completion = { completeopt = "noselect" },
             sources = cmp.config.sources({
-                { name = "nvim_lsp", priority = 1000 },
-                { name = "luasnip", priority = 750 },
-                { name = "buffer", priority = 500 },
-                { name = "path", priority = 250 },
-                --{ name = "nvim_lsp_signature_help", priority = 150 },
+                { name = "nvim_lsp_signature_help" },
+                { name = "nvim_lsp" },
+                { name = "luasnip" },
+                {
+                    name = "buffer",
+                    option = {
+                        get_bufnrs = function()
+                            return vim.api.nvim_list_bufs()
+                        end,
+                    },
+                },
+                { name = "path" },
             }),
             duplicates = {
                 nvim_lsp = 1,

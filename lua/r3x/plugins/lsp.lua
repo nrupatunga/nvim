@@ -13,7 +13,7 @@ return {
         "neovim/nvim-lspconfig",
         dependencies = {
             "ray-x/lsp_signature.nvim",
-	    "RRethy/vim-illuminate",
+            "RRethy/vim-illuminate",
         },
         event = "BufReadPre",
         config = function()
@@ -30,6 +30,7 @@ return {
                 "bashls",
                 "clangd",
                 "jedi_language_server",
+                "yamlls",
             }
 
             for _, server in pairs(servers) do
@@ -68,6 +69,20 @@ return {
                     }
                     opts = vim.tbl_deep_extend("force", pyright_opts, opts)
                 end
+                if server == "yamlls" then
+                    local yaml_opts = {
+                        settings = {
+                            yaml = {
+                                schemas = {
+                                    ["https://raw.githubusercontent.com/quantumblacklabs/kedro/develop/static/jsonschema/kedro-catalog-0.17.json"] = "conf/**/*catalog*",
+                                    ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+                                },
+                                keyOrdering = false,
+                            },
+                        },
+                    }
+                    opts = vim.tbl_deep_extend("force", yaml_opts, opts)
+                end
 
                 lspconfig[server].setup(opts)
             end
@@ -85,16 +100,6 @@ return {
                             command = "clippy", --TODO: `rustup component add clippy` to install clippy
                             extraArgs = { "--no-deps" },
                         },
-                    },
-                },
-            })
-
-            lspconfig["yamlls"].setup({
-                on_attach = on_attach,
-                capabilities = capabilities,
-                settings = {
-                    yaml = {
-                        keyOrdering = false,
                     },
                 },
             })
@@ -173,7 +178,7 @@ return {
                 end,
                 sources = {
                     formatting.stylua,
-                    --formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
+                    formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
                     --formatting.black.with({ extra_args = { "--fast" } }),
                     formatting.autopep8,
                     formatting.isort,

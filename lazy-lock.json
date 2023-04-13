@@ -1,8 +1,8 @@
 {
-  "ChatGPT.nvim": { "branch": "main", "commit": "3ff8403136e3298f45ff9d11456f922da5b9fc50" },
   "LuaSnip": { "branch": "master", "commit": "eb592e4be52fff5a514b7540d5341b55ca4c3226" },
   "better-escape.nvim": { "branch": "master", "commit": "d5ee0cef56a7e41a86048c14f25e964876ac20c1" },
   "cellular-automaton.nvim": { "branch": "main", "commit": "679943b8e1e5ef79aaeeaf4b00782c52eb4e928f" },
+  "cmp-buffer": { "branch": "main", "commit": "3022dbc9166796b644a841a02de8dd1cc1d311fa" },
   "cmp-nvim-lsp": { "branch": "main", "commit": "0e6b2ed705ddcff9738ec4ea838141654f12eeef" },
   "cmp-nvim-lsp-signature-help": { "branch": "main", "commit": "3d8912ebeb56e5ae08ef0906e3a54de1c66b92f1" },
   "cmp-path": { "branch": "main", "commit": "91ff86cd9c29299a64f968ebb45846c485725f23" },
@@ -20,7 +20,6 @@
   "mason.nvim": { "branch": "main", "commit": "4c3e920c79e0493819ffdd2260d3c79ab1c0a41d" },
   "mru.vim": { "branch": "master", "commit": "9f25db66393a6467fae0ac04ae6565e8471023c3" },
   "nerdcommenter": { "branch": "master", "commit": "d069f7fb562fb9eb6911fe23cda7aca2a387043e" },
-  "nui.nvim": { "branch": "main", "commit": "ecd9def93891b9260b15b5fcef542eaabf4145c9" },
   "null-ls.nvim": { "branch": "main", "commit": "f8ffcd7cb8fb3325c711d459152ef132b5b65aed" },
   "nvim-autopairs": { "branch": "master", "commit": "7470af886ffb3df32800e5ef9c072a6cd825770d" },
   "nvim-cmp": { "branch": "main", "commit": "777450fd0ae289463a14481673e26246b5e38bf2" },
