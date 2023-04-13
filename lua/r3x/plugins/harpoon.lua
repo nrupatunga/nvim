@@ -52,6 +52,13 @@ return {
             end,
             desc = "Harpoon jump to file 5",
         },
+        {
+            "<leader>q",
+            function()
+                require("harpoon.tmux").gotoTerminal(1)
+            end,
+            desc = "go to pane below",
+        },
     },
     config = function()
         require("telescope").load_extension("harpoon")
