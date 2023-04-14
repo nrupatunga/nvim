@@ -58,6 +58,8 @@ return {
                 color_devicons = true,
                 mappings = {
                     i = {
+                        ["<Tab>"] = tactions.move_selection_next,
+                        ["<S-Tab>"] = tactions.move_selection_previous,
                         ["<esc>"] = tactions.close,
                         ["<c-t>"] = trouble.open_with_trouble,
                     },
