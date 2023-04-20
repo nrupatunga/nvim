@@ -1,3 +1,5 @@
+--https://github.com/ChristianChiarulli/nvim/blob/master/lua/user/cmp.lua
+
 return {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
@@ -8,16 +10,25 @@ return {
         "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
         "hrsh7th/cmp-nvim-lsp-signature-help",
+        {
+            "zbirenbaum/copilot-cmp",
+            after = { "copilot.lua" },
+            config = function()
+                require("copilot_cmp").setup()
+            end,
+        },
     },
     config = function()
         local luasnip = require("luasnip")
         local cmp = require("cmp")
+        local compare = require("cmp.config.compare")
 
         local kind_icons = {
             Text = "",
             Method = "m",
             Function = "",
             Constructor = "",
+            Copilot = "",
             Field = "",
             Variable = "",
             Class = "",
@@ -101,12 +112,16 @@ return {
             formatting = {
                 fields = { "kind", "abbr", "menu" },
                 format = function(entry, vim_item)
+                    if entry.source.name == "copilot" then
+                        vim_item.kind_hl_group = "CmpItemKindCopilot"
+                    end
                     vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
                     vim_item.menu = ({
                         nvim_lsp = "[LSP]",
                         luasnip = "[Snip]",
                         buffer = "[Buff]",
                         path = "[Path]",
+                        copilot = "[AI]",
                         --signature = "[Sig]",
                     })[entry.source.name]
                     return vim_item
@@ -127,7 +142,51 @@ return {
                     },
                 },
                 { name = "path" },
+                {
+                    name = "copilot",
+                    -- keyword_length = 0,
+                    max_item_count = 3,
+                    trigger_characters = {
+                        {
+                            ".",
+                            ":",
+                            "(",
+                            "'",
+                            '"',
+                            "[",
+                            ",",
+                            "#",
+                            "*",
+                            "@",
+                            "|",
+                            "=",
+                            "-",
+                            "{",
+                            "/",
+                            "\\",
+                            "+",
+                            "?",
+                            " ",
+                        },
+                    },
+                    group_index = 2,
+                },
             }),
+            sorting = {
+                priority_weight = 2,
+                comparators = {
+                    compare.offset,
+                    compare.exact,
+                    -- compare.scopes,
+                    compare.score,
+                    compare.recently_used,
+                    require("copilot_cmp.comparators").prioritize,
+                    compare.locality,
+                    compare.sort_text,
+                    compare.length,
+                    compare.order,
+                },
+            },
             duplicates = {
                 nvim_lsp = 1,
                 luasnip = 1,
