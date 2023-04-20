@@ -57,12 +57,6 @@ return {
                 end,
             },
             mapping = cmp.mapping.preset.insert({
-                ["<M-k>"] = cmp.mapping.select_prev_item(),
-                ["<M-j>"] = cmp.mapping.select_next_item(),
-                ["<M-i>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
-                ["<M-o>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
-                ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-                ["<C-y>"] = cmp.config.disable,
                 ["<C-e>"] = cmp.mapping({
                     i = cmp.mapping.abort(),
                     c = cmp.mapping.close(),
@@ -107,7 +101,6 @@ return {
                         luasnip = "[Snip]",
                         buffer = "[Buff]",
                         path = "[Path]",
-                        --signature = "[Sig]",
                     })[entry.source.name]
                     return vim_item
                 end,
