@@ -8,13 +8,10 @@ return {
         "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
         "hrsh7th/cmp-nvim-lsp-signature-help",
-        { "tzachar/cmp-tabnine", build = "./install.sh" },
     },
     config = function()
         local luasnip = require("luasnip")
         local cmp = require("cmp")
-        local tabnine = require("cmp_tabnine.config")
-
         local kind_icons = {
             Text = "",
             Method = "m",
@@ -52,20 +49,6 @@ return {
             local col = vim.fn.col(".") - 1
             return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
         end
-
-        tabnine:setup({
-            max_lines = 1000,
-            max_num_results = 20,
-            sort = true,
-            run_on_every_keystroke = true,
-            snippet_placeholder = "..",
-            ignored_file_types = {
-                -- default is not to ignore
-                -- uncomment to ignore in lua:
-                -- lua = true
-            },
-            show_prediction_strength = true,
-        })
 
         cmp.setup({
             snippet = {
@@ -112,17 +95,12 @@ return {
             formatting = {
                 fields = { "kind", "abbr", "menu" },
                 format = function(entry, vim_item)
-                    if entry.source.name == "cmp_tabnine" then
-                        vim_item.kind = 'Robot'
-                    end
                     vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
                     vim_item.menu = ({
                         nvim_lsp = "[LSP]",
                         luasnip = "[Snip]",
                         buffer = "[Buff]",
                         path = "[Path]",
-                        cmp_tabnine = "[TN]",
-                        --signature = "[Sig]",
                     })[entry.source.name]
                     return vim_item
                 end,
@@ -133,7 +111,6 @@ return {
                 { name = "nvim_lsp_signature_help" },
                 { name = "nvim_lsp" },
                 { name = "luasnip" },
-                { name = "cmp_tabnine" },
                 {
                     name = "buffer",
                     option = {
