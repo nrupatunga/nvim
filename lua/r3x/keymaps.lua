@@ -15,7 +15,7 @@ keymap("n", "<C-u>", "<C-u>zz")
 
 -- because im lazy
 keymap("n", "<C-a>", "ggVG", opts)
-keymap("n", "<leader><ESC>", "<cmd>wqa<CR>", opts)
+keymap("n", "<leader>q", "<cmd>wqa<CR>", opts)
 
 -- buffer
 keymap("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = "Close current buffer" })
@@ -69,3 +69,4 @@ function _G.toggle_diagnostics()
 end
 
 keymap("n", "<leader>D", ":call v:lua.toggle_diagnostics()<CR>", { silent = true, noremap = true })
+keymap("n", "<leader>z", "<cmd>Lazy<cr>", { silent = true, noremap = true })

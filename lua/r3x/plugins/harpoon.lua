@@ -53,7 +53,7 @@ return {
             desc = "Harpoon jump to file 5",
         },
         {
-            "<leader>q",
+            "<leader><ESC>",
             function()
                 require("harpoon.tmux").gotoTerminal(1)
             end,
