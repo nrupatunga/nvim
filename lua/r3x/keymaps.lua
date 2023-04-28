@@ -69,4 +69,4 @@ function _G.toggle_diagnostics()
 end
 
 keymap("n", "<leader>D", ":call v:lua.toggle_diagnostics()<CR>", { silent = true, noremap = true })
-keymap("n", "<leader>z", "<cmd>Lazy<cr>", { silent = true, noremap = true })
+keymap("n", "<leader>r", "<cmd>Lazy<cr>", { silent = true, noremap = true })
