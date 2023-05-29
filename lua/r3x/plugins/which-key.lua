@@ -10,7 +10,6 @@ return {
         presets.operators["y"] = nil
 
         local wk = require("which-key")
-
         wk.setup({})
     end,
 }

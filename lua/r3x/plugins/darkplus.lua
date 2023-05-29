@@ -1,3 +1,3 @@
 return {
-    "lunarvim/darkplus.nvim",
+    "nrupatunga/darkplus.nvim",
 }
