@@ -88,18 +88,18 @@ M.setup = function()
     vim.cmd([[autocmd FileType * set formatoptions-=ro]])
 end
 
-local signature_cfg = {
-    bind = true,
-    hint_enable = false,
-    floating_window = true,
-    floating_window_above_cur_line = true,
-    check_completion_visible = true,
-    toggle_key = "<M-t>",
-    select_signature_key = "<M-s>",
-    handler_opts = {
-        border = "rounded",
-    },
-}
+--local signature_cfg = {
+    --bind = true,
+    --hint_enable = false,
+    --floating_window = true,
+    --floating_window_above_cur_line = true,
+    --check_completion_visible = true,
+    --toggle_key = "<M-t>",
+    --select_signature_key = "<M-s>",
+    --handler_opts = {
+        --border = "rounded",
+    --},
+--}
 
 local function lsp_keymaps(bufnr)
     local opts = { noremap = true, silent = true }
@@ -117,7 +117,8 @@ local function lsp_keymaps(bufnr)
     keymap(bufnr, "n", "<leader>lj", "<cmd>lua vim.diagnostic.goto_next({buffer=0})<CR>", opts)
     keymap(bufnr, "n", "<leader>l", "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<CR>", opts)
     keymap(bufnr, "n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-    keymap(bufnr, "n", "<leader>h", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+    keymap(bufnr, "n", "<c-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+    keymap(bufnr, "i", "<c-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
     keymap(bufnr, "n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
 end
 
@@ -140,7 +141,7 @@ M.on_attach = function(client, bufnr)
     lsp_keymaps(bufnr)
 
     require("illuminate").on_attach(client)
-    require("lsp_signature").on_attach(signature_cfg, bufnr)
+    --require("lsp_signature").on_attach(signature_cfg, bufnr)
     --require("nvim-navbuddy").attach(client, bufnr)
 end
 
