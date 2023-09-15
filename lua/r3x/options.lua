@@ -55,4 +55,5 @@ vim.cmd("highlight   PmenuThumb    ctermfg=0 ctermbg=7")
 
 vim.cmd("hi Search ctermbg=yellow")
 vim.cmd("hi Search ctermfg=Red")
+vim.lsp.set_log_level("off")
 --vim.cmd("set winbar=%f%m")
