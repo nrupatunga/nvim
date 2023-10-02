@@ -2,18 +2,17 @@ return {
     {
         "lukas-reineke/indent-blankline.nvim",
         event = "BufReadPre",
-	main = 'ibl',
+        main = "ibl",
         opts = {
-            char = "┊",
-            use_treesitter = true,
-            space_char_blankline = " ",
-            show_current_context = false,
-            show_current_context_start = false,
-            buftype_exclude = {
-                "nofile",
-                "terminal",
+            scope = {
+                show_start = false,
+                include = {
+                    node_type = { "*" },
+                },
             },
-            filetype_exclude = {
+        },
+        exclude = {
+            filetypes = {
                 "man",
                 "help",
                 "lazy",
@@ -29,28 +28,6 @@ return {
                 "diagnosticpopup",
                 "TelescopePrompt",
                 "TelescopeResults",
-            },
-            context_patterns = {
-                "class",
-                "return",
-                "function",
-                "method",
-                "^if",
-                "^while",
-                "jsx_element",
-                "^for",
-                "^object",
-                "^table",
-                "block",
-                "arguments",
-                "if_statement",
-                "else_clause",
-                "jsx_element",
-                "jsx_self_closing_element",
-                "try_statement",
-                "catch_clause",
-                "import_statement",
-                "operation_type",
             },
         },
     },
