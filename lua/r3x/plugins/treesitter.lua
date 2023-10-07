@@ -1,12 +1,15 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
-        event = {"BufReadPre"},
+        event = { "BufReadPre" },
         build = function()
             require("nvim-treesitter.install").update({ with_sync = true })
         end or ":TSUpdate",
         dependencies = {
-            "nvim-treesitter/playground",
+            {
+                "nvim-treesitter/nvim-treesitter-textobjects",
+                event = "VeryLazy",
+            },
         },
         config = function()
             require("nvim-treesitter.configs").setup({

@@ -1,6 +1,6 @@
 return {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = { "nvim-lua/plenary.nvim", { "nvim-telescope/telescope-fzf-native.nvim", build = "make" } },
     cmd = { "Telescope find_files" },
     keys = {
         {
@@ -39,6 +39,7 @@ return {
         local scope = require("telescope")
         local tactions = require("telescope.actions")
         local trouble = require("trouble.providers.telescope")
+        scope.load_extension("fzf")
         scope.setup({
             defaults = {
                 file_ignore_patterns = {

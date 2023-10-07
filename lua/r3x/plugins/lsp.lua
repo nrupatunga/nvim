@@ -1,7 +1,7 @@
 return {
     {
         "williamboman/mason.nvim",
-        event = "BufReadPre",
+        event = { "BufReadPre", "BufNewFile" },
         opts = {
             ensure_installed = {
                 "prettierd",
