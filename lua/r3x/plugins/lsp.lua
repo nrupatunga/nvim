@@ -6,6 +6,8 @@ return {
             ensure_installed = {
                 "prettierd",
                 "stylua",
+                "clangd",
+                "clang-format",
             },
         },
     },
@@ -152,7 +154,8 @@ return {
     },
     -- code formatters
     {
-        "jose-elias-alvarez/null-ls.nvim",
+        --"jose-elias-alvarez/null-ls.nvim",
+        "nvimtools/none-ls.nvim",
         event = "LspAttach",
         config = function()
             local null_ls = require("null-ls")
@@ -182,6 +185,7 @@ return {
                     --formatting.black.with({ extra_args = { "--fast" } }),
                     formatting.autopep8,
                     formatting.isort,
+                    formatting.clang_format.with({ extra_args = {"-style=file:" .. vim.fn.expand("/home/nthere/.clang-format")} }),
                     --diagnostics.flake8,
                 },
             })
