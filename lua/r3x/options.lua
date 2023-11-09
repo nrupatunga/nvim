@@ -53,6 +53,13 @@ vim.cmd("highlight   PmenuSel      ctermfg=0 ctermbg=7")
 vim.cmd("highlight   PmenuSbar     ctermfg=7 ctermbg=0")
 vim.cmd("highlight   PmenuThumb    ctermfg=0 ctermbg=7")
 
+--vim.cmd(
+    --[[command! -nargs=0 GoToFile lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({previewer = false }))]]
+--)
+vim.cmd([[command! -nargs=0 GoToFile lua require("harpoon.ui").nav_file(1)<cr> ]])
+vim.cmd([[command! -nargs=0 Grep lua require('telescope.builtin').live_grep()]])
+vim.cmd([[command! -nargs=0 SmartGoTo :Telescope smart_goto]])
+
 vim.cmd("hi Search ctermbg=yellow")
 vim.cmd("hi Search ctermfg=Red")
 vim.lsp.set_log_level("off")

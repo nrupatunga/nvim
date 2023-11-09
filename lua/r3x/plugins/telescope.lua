@@ -1,6 +1,10 @@
 return {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", { "nvim-telescope/telescope-fzf-native.nvim", build = "make" } },
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+        "joshmedeski/telescope-smart-goto.nvim",
+    },
     cmd = { "Telescope find_files" },
     keys = {
         {
@@ -20,7 +24,8 @@ return {
         },
         {
             "<leader>t",
-            "<cmd>lua require'telescope.builtin'.lsp_document_symbols(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
+            --"<cmd>lua require'telescope.builtin'.lsp_document_symbols(require('telescope.themes').get_dropdown({ previewer = false }), {symbol_width = 200})<cr>",
+            "<cmd>lua require'telescope.builtin'.lsp_document_symbols(require('telescope.themes').get_dropdown({ previewer = false, symbol_width=42 }))<cr>",
             desc = "Shows document symbols",
         },
         {
@@ -40,6 +45,7 @@ return {
         local tactions = require("telescope.actions")
         local trouble = require("trouble.providers.telescope")
         scope.load_extension("fzf")
+        scope.load_extension("smart_goto")
         scope.setup({
             defaults = {
                 file_ignore_patterns = {
