@@ -25,7 +25,7 @@ return {
         {
             "<leader>t",
             --"<cmd>lua require'telescope.builtin'.lsp_document_symbols(require('telescope.themes').get_dropdown({ previewer = false }), {symbol_width = 200})<cr>",
-            "<cmd>lua require'telescope.builtin'.lsp_document_symbols(require('telescope.themes').get_dropdown({ previewer = false, symbol_width=42 }))<cr>",
+            "<cmd>lua require'telescope.builtin'.lsp_document_symbols(require('telescope.themes').get_dropdown({ previewer = true, symbol_width=42 }))<cr>",
             desc = "Shows document symbols",
         },
         {
