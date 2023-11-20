@@ -44,7 +44,6 @@ return {
         local tactions = require("telescope.actions")
         local trouble = require("trouble.providers.telescope")
         scope.load_extension("fzf")
-        scope.load_extension("smart_goto")
         scope.setup({
             defaults = {
                 file_ignore_patterns = {

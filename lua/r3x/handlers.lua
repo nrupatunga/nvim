@@ -89,16 +89,16 @@ M.setup = function()
 end
 
 --local signature_cfg = {
-    --bind = true,
-    --hint_enable = false,
-    --floating_window = true,
-    --floating_window_above_cur_line = true,
-    --check_completion_visible = true,
-    --toggle_key = "<M-t>",
-    --select_signature_key = "<M-s>",
-    --handler_opts = {
-        --border = "rounded",
-    --},
+--bind = true,
+--hint_enable = false,
+--floating_window = true,
+--floating_window_above_cur_line = true,
+--check_completion_visible = true,
+--toggle_key = "<M-t>",
+--select_signature_key = "<M-s>",
+--handler_opts = {
+--border = "rounded",
+--},
 --}
 
 local function lsp_keymaps(bufnr)
@@ -111,6 +111,7 @@ local function lsp_keymaps(bufnr)
     keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
     keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
     keymap(bufnr, "n", "<leader>lf", "<cmd>lua vim.lsp.buf.format({timeout_ms = 5000})<cr>", opts)
+    keymap(bufnr, "v", "<leader>lf", "<cmd>lua vim.lsp.buf.format({timeout_ms = 5000})<cr>", opts)
     keymap(bufnr, "n", "<leader>li", "<cmd>LspInfo<cr>", opts)
     keymap(bufnr, "n", "<leader>lI", "<cmd>LspInstallInfo<cr>", opts)
     keymap(bufnr, "n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
@@ -132,7 +133,7 @@ M.on_attach = function(client, bufnr)
     if client.name == "lua_ls" then
         client.server_capabilities.documentFormattingProvider = false
     end
-		
+
     if client.name == "yamlls" then
         client.server_capabilities.documentFormattingProvider = false
     end
