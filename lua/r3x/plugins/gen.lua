@@ -1,7 +1,7 @@
 return {
     "nomnivore/ollama.nvim",
     dependencies = {
-        "nvim-lua/plenary.nvim",
+	"nvim-lua/plenary.nvim",
     },
 
     -- All the user commands added by the plugin
@@ -9,16 +9,16 @@ return {
 
     -- Sample keybind for prompting. Note that the <c-u> is important for selections to work properly.
     keys = {
-        {
-            "<leader>gn",
-            ":<c-u>lua require('ollama').prompt()<cr>",
-            desc = "ollama prompt",
-            mode = { "n", "v" },
-        },
+	{
+	    "<leader>gn",
+	    ":<c-u>lua require('ollama').prompt()<cr>",
+	    desc = "ollama prompt",
+	    mode = { "n", "v" },
+	},
     },
 
     ---@type Ollama.Config
     opts = {
-        -- your configuration overrides
+	-- your configuration overrides
     },
 }
