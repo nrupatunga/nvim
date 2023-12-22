@@ -33,6 +33,7 @@ return {
             desc = "Shows old files opened",
         },
         { "<leader>gr", "<cmd>Telescope live_grep<CR>", desc = "Find texts" },
+        { "<leader>gw", "<cmd>Telescope grep_string<CR>", { silent = true, desc = "grep string under cursor" } },
         { "<leader>b", "<cmd>Telescope buffers<CR>", desc = "List Opened Buffers" },
         { "<leader>T", "<cmd>Telescope treesitter<CR>", desc = "List Treesitter Variables" },
         { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "Git status" },
@@ -61,6 +62,9 @@ return {
                     "%.lock$",
                 },
                 color_devicons = true,
+                selection_caret = "󰁕 ",
+                prompt_prefix = " ",
+                sorting_strategy = "ascending",
                 mappings = {
                     i = {
                         ["<Tab>"] = tactions.move_selection_next,
@@ -74,14 +78,24 @@ return {
                         ["<c-t>"] = trouble.open_with_trouble,
                     },
                 },
-                layout_strategy = "vertical",
-                --layout_config = { height = 0.95, preview_height = 0.6, preview_cutoff = 0 },
+                layout_config = {
+                    height = 0.90,
+                    width = 0.80,
+                    preview_cutoff = 0,
+                    horizontal = { preview_width = 0.60 },
+                    vertical = { width = 0.55, height = 0.9, preview_cutoff = 0 },
+                    prompt_position = "top",
+                },
                 path_display = { "smart", shorten = { len = 3 } },
                 dynamic_preview_title = true,
                 wrap_results = true,
             },
             pickers = {
-                find_files = { hidden = true },
+                find_files = {
+                    hidden = true,
+                    prompt_prefix = "  ",
+                    find_command = { "fd", "-H" },
+                },
                 live_grep = {
                     additional_args = function()
                         return { "--hidden" }
