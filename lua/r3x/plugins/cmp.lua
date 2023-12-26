@@ -21,6 +21,7 @@ return {
             Field = "",
             Variable = "",
             Class = "",
+            Codeium = "",
             Interface = "",
             Module = "",
             Property = "",
@@ -68,6 +69,10 @@ return {
                         cmp.select_next_item()
                     elseif luasnip.expandable() then
                         luasnip.expand()
+                    elseif vim.fn.exists("b:_codeium_completions") ~= 0 then
+                        -- accept codeium completion if visible
+                        vim.api.nvim_input(vim.fn["codeium#Accept"]())
+                        fallback()
                     elseif luasnip.expand_or_jumpable() then
                         --luasnip.expand_or_jump()
                         luasnip.expand()
@@ -107,6 +112,7 @@ return {
                         nvim_lsp = "[LSP]",
                         luasnip = "[Snip]",
                         buffer = "[Buff]",
+                        codeium = "[AI]",
                         path = "[Path]",
                     })[entry.source.name]
                     if truncated_label ~= label then
@@ -123,6 +129,7 @@ return {
             sources = cmp.config.sources({
                 { name = "nvim_lsp_signature_help" },
                 { name = "nvim_lsp" },
+                { name = "codeium" },
                 { name = "luasnip" },
                 {
                     name = "buffer",
