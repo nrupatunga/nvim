@@ -1,6 +1,6 @@
 return {
     "hrsh7th/nvim-cmp",
-    event = { 'InsertEnter', 'BufReadPre', 'BufNewFile'},
+    event = { "InsertEnter", "BufReadPre", "BufNewFile" },
     --event = { "InsertEnter" },
     dependencies = {
         "L3MON4D3/LuaSnip",

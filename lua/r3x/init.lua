@@ -4,4 +4,3 @@ require("r3x.lazy")
 
 --vim.cmd([[colorscheme darkplus]])
 vim.cmd([[colorscheme github_dark_high_contrast]])
---vim.cmd([[colorscheme kanagawa]])
