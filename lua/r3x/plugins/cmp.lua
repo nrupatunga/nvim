@@ -21,6 +21,7 @@ return {
             Field = "",
             Variable = "",
             Class = "",
+            Copilot = "",
             Codeium = "",
             Interface = "",
             Module = "",
@@ -67,6 +68,8 @@ return {
                 ["<Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item()
+                    elseif require("copilot.suggestion").is_visible() then
+                        require("copilot.suggestion").accept()
                     elseif luasnip.expandable() then
                         luasnip.expand()
                     elseif vim.fn.exists("b:_codeium_completions") ~= 0 then
@@ -112,7 +115,7 @@ return {
                         nvim_lsp = "[LSP]",
                         luasnip = "[Snip]",
                         buffer = "[Buff]",
-                        codeium = "[AI]",
+                        copilot = "[AI]",
                         path = "[Path]",
                     })[entry.source.name]
                     if truncated_label ~= label then
@@ -129,7 +132,7 @@ return {
             sources = cmp.config.sources({
                 { name = "nvim_lsp_signature_help" },
                 { name = "nvim_lsp" },
-                { name = "codeium" },
+                { name = "copilot" },
                 { name = "luasnip" },
                 {
                     name = "buffer",
