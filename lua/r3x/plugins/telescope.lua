@@ -2,6 +2,8 @@ return {
     "nvim-telescope/telescope.nvim",
     dependencies = {
         "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope-live-grep-args.nvim",
+	
         { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     },
     cmd = { "Telescope find_files" },
@@ -32,8 +34,18 @@ return {
             "<cmd>lua require'telescope.builtin'.oldfiles(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
             desc = "Shows old files opened",
         },
-        { "<leader>gr", "<cmd>Telescope live_grep<CR>", desc = "Find texts" },
-        { "<leader>gw", "<cmd>Telescope grep_string<CR>", { silent = true, desc = "grep string under cursor" } },
+        --{ "<leader>gr", "<cmd>Telescope live_grep<CR>", desc = "Find texts" },
+        --{ "<leader>gw", "<cmd>Telescope grep_string<CR>", { silent = true, desc = "grep string under cursor" } },
+        {
+            "<leader>gr",
+            "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>",
+            { silent = true, desc = "grep string " },
+        },
+        {
+            "<leader>gw",
+            "<cmd>lua require('telescope-live-grep-args.shortcuts').grep_word_under_cursor()<cr>",
+            { silent = true, desc = "grep string under cursor" },
+        },
         { "<leader>b", "<cmd>Telescope buffers<CR>", desc = "List Opened Buffers" },
         { "<leader>T", "<cmd>Telescope treesitter<CR>", desc = "List Treesitter Variables" },
         { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "Git status" },
@@ -44,6 +56,25 @@ return {
         local scope = require("telescope")
         local tactions = require("telescope.actions")
         local trouble = require("trouble.providers.telescope")
+        require("telescope").load_extension("live_grep_args")
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = "TelescopeResults",
+            callback = function(ctx)
+                vim.api.nvim_buf_call(ctx.buf, function()
+                    vim.fn.matchadd("TelescopeParent", "\t\t.*$")
+                    vim.api.nvim_set_hl(0, "TelescopeParent", { link = "Comment" })
+                end)
+            end,
+        })
+
+        local function filenameFirst(_, path)
+            local tail = vim.fs.basename(path)
+            local parent = vim.fs.dirname(path)
+            if parent == "." then
+                return tail
+            end
+            return string.format("%s\t\t%s", tail, parent)
+        end
         scope.load_extension("fzf")
         scope.setup({
             defaults = {
@@ -92,9 +123,13 @@ return {
             },
             pickers = {
                 find_files = {
+                    path_display = filenameFirst,
                     hidden = true,
                     prompt_prefix = "  ",
                     find_command = { "fd", "-H" },
+                },
+                git_files = {
+                    path_display = filenameFirst,
                 },
                 live_grep = {
                     additional_args = function()
