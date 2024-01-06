@@ -1,5 +1,5 @@
 local options = {
-    autochdir = true, -- change the directory according to the file opened
+    autochdir = false, -- change the directory according to the file opened
     autoread = true,
     autowrite = true,
     backspace = "indent,eol,start", -- https://tinyurl.com/2p8yv2hh
