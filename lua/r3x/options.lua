@@ -26,7 +26,7 @@ local options = {
     visualbell = true, -- this is for visual flashy display of vim screen, use instead of sound
     wildmenu = true, -- wildmenu for commands, when you press tab it will show some possible commands
     swapfile = false,
-    --showtabline = 2,
+    showtabline = 2,
 }
 
 for k, v in pairs(options) do

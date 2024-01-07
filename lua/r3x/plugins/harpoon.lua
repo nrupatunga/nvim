@@ -24,5 +24,10 @@ return {
                 ui_width_ratio = 0.3,
             })
         end, { desc = "harpoon toggle menu" })
+        vim.keymap.set("n", "<leader>d", function()
+            harpoon:list():next({
+                ui_nav_wrap = true,
+            })
+        end)
     end,
 }

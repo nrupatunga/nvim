@@ -77,8 +77,8 @@ return {
                         vim.api.nvim_input(vim.fn["codeium#Accept"]())
                         fallback()
                     elseif luasnip.expand_or_jumpable() then
-                        --luasnip.expand_or_jump()
-                        luasnip.expand()
+			luasnip.expand_or_jump()
+                        --luasnip.expand()
                     elseif check_backspace() then
                         fallback()
                     else
