@@ -11,6 +11,7 @@ return {
 
         local function add_file()
             harpoon:list():append()
+            vim.notify = require("notify")
             vim.notify(" Marked file")
         end
 
