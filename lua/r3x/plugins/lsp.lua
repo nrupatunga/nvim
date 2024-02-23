@@ -112,6 +112,7 @@ return {
             lspconfig["clangd"].setup({
                 on_attach = on_attach,
                 capabilities = cap,
+                cmd = { "clangd", "--background-index", "--clang-tidy" },
             })
 
             require("r3x.handlers").setup()
@@ -154,8 +155,8 @@ return {
     },
     -- code formatters
     {
-        --"jose-elias-alvarez/null-ls.nvim",
-        "nvimtools/none-ls.nvim",
+        "jose-elias-alvarez/null-ls.nvim",
+        --"nvimtools/none-ls.nvim",
         event = "LspAttach",
         config = function()
             local null_ls = require("null-ls")

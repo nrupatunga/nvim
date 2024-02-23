@@ -10,7 +10,7 @@ return {
         local telescope = require("telescope")
 
         local function add_file()
-            harpoon:list():append()
+            harpoon:list():add()
             vim.notify = require("notify")
             vim.notify(" Marked file")
         end
