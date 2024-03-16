@@ -154,8 +154,8 @@ return {
     },
     -- code formatters
     {
-        --"jose-elias-alvarez/null-ls.nvim",
-        "nvimtools/none-ls.nvim",
+	--"jose-elias-alvarez/null-ls.nvim",
+	"nvimtools/none-ls.nvim",
         event = "LspAttach",
         config = function()
             local null_ls = require("null-ls")
@@ -183,7 +183,8 @@ return {
                     formatting.stylua,
                     formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
                     --formatting.black.with({ extra_args = { "--fast" } }),
-                    formatting.autopep8,
+                    --formatting.autopep8,
+                    formatting.pyink,
                     formatting.isort,
                     formatting.clang_format.with({
                         extra_args = { "-style=file:" .. vim.fn.expand("/home/nthere/.clang-format") },
