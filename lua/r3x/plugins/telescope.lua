@@ -55,7 +55,7 @@ return {
     config = function()
         local scope = require("telescope")
         local tactions = require("telescope.actions")
-        local trouble = require("trouble.providers.telescope")
+        local trouble = require("trouble.sources.telescope")
         require("telescope").load_extension("live_grep_args")
         vim.api.nvim_create_autocmd("FileType", {
             pattern = "TelescopeResults",
@@ -101,12 +101,12 @@ return {
                         ["<Tab>"] = tactions.move_selection_next,
                         ["<S-Tab>"] = tactions.move_selection_previous,
                         ["<esc>"] = tactions.close,
-                        ["<c-t>"] = trouble.open_with_trouble,
+                        ["<c-t>"] = trouble.open,
                     },
                     n = {
                         ["<esc>"] = tactions.close,
                         ["dd"] = "delete_buffer",
-                        ["<c-t>"] = trouble.open_with_trouble,
+                        ["<c-t>"] = trouble.open,
                     },
                 },
                 layout_config = {
