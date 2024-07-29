@@ -2,6 +2,7 @@ return {
     "nomnivore/ollama.nvim",
     dependencies = {
 	"nvim-lua/plenary.nvim",
+	"stevearc/dressing.nvim"
     },
 
     -- All the user commands added by the plugin
