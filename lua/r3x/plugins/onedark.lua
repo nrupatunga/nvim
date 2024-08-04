@@ -1,1 +1,0 @@
-return {'ChristianChiarulli/onedark.nvim'}
