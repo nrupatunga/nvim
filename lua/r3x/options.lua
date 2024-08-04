@@ -52,6 +52,8 @@ vim.cmd("highlight   Pmenu         ctermfg=0 ctermbg=2")
 vim.cmd("highlight   PmenuSel      ctermfg=0 ctermbg=7")
 vim.cmd("highlight   PmenuSbar     ctermfg=7 ctermbg=0")
 vim.cmd("highlight   PmenuThumb    ctermfg=0 ctermbg=7")
+vim.cmd("autocmd VimEnter * hi Normal ctermbg=NONE guibg=NONE")
+vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
 
 --vim.cmd(
 --[[command! -nargs=0 GoToFile lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({previewer = false }))]]
