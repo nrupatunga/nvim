@@ -1,3 +1,0 @@
-return {
-    "nrupatunga/darkplus.nvim",
-}
