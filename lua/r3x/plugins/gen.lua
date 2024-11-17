@@ -21,6 +21,7 @@ return {
     ---@type Ollama.Config
     opts = {
         -- your configuration overrides
-        model = "codellama",
+        --model = "codellama",
+        model = "qwen2.5-coder:1.5b",
     },
 }

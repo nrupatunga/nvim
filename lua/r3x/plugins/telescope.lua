@@ -3,7 +3,7 @@ return {
     dependencies = {
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope-live-grep-args.nvim",
-	
+
         { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     },
     cmd = { "Telescope find_files" },
@@ -135,6 +135,9 @@ return {
                     additional_args = function()
                         return { "--hidden" }
                     end,
+                },
+                colorscheme = {
+                    enable_preview = true,
                 },
             },
         })
