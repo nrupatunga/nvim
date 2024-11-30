@@ -1,6 +1,6 @@
 return { 
     "preservim/tagbar",
     keys = {
-        { "<leader>gt", "<cmd>TagbarToggle<CR>", desc = "tagbar toggle" },
+        { "<leader>ga", "<cmd>TagbarToggle<CR>", desc = "tagbar toggle" },
     },
 }

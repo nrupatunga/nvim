@@ -1,5 +1,6 @@
 return {
     "nyngwang/NeoZoom.lua",
+    event = { "BufReadPre", "BufNewFile" },
     enabled = true,
     dependencies = { "nyngwang/NeoNoName.lua" }, -- this is only required if you want the `keymap` below.
     config = function()
