@@ -34,5 +34,12 @@ return {
             end,
             desc = "Lazygit Log (cwd)",
         },
+        {
+            "<leader>gb",
+            function()
+                require("snacks").gitbrowse()
+            end,
+            desc = "git browse",
+        },
     },
 }
