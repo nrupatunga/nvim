@@ -112,7 +112,13 @@ return {
             lspconfig["clangd"].setup({
                 on_attach = on_attach,
                 capabilities = cap,
-                cmd = { "clangd", "--background-index", "--clang-tidy" },
+                cmd = {
+                    "clangd",
+                    "--background-index",
+                    "--clang-tidy",
+                    "--completion-style=detailed",
+                    "--malloc-trim",
+                },
             })
 
             require("r3x.handlers").setup()
