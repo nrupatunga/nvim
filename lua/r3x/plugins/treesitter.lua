@@ -16,6 +16,7 @@ return {
                 ensure_installed = {
                     "bash",
                     "c",
+                    "cuda",
                     "cpp",
                     "css",
                     "dart",
