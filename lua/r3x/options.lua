@@ -12,6 +12,7 @@ local options = {
     history = 1000,
     hlsearch = true,
     ignorecase = true,
+    laststatus = 3,
     number = true,
     numberwidth = 4,
     pumheight = 10, -- number of items to show in the pop up menu
@@ -98,3 +99,4 @@ end
 
 local root_augroup = vim.api.nvim_create_augroup("MyAutoRoot", {})
 vim.api.nvim_create_autocmd("BufEnter", { group = root_augroup, callback = set_root })
+vim.env.OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
