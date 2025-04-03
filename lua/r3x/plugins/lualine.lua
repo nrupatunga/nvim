@@ -5,7 +5,7 @@ return {
         local lspStatus = {
             function()
                 local msg = "No LSP detected"
-                local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
+                local buf_ft = vim.bo.filetype
                 local clients = vim.lsp.get_clients()
                 if next(clients) == nil then
                     return msg
@@ -19,44 +19,107 @@ return {
                 return msg
             end,
             icon = " ",
-            color = { fg = "#d3d3d3" },
+            color = { fg = "#ffffff", bg = "#5c6370" },
         }
+        -- Put proper separators and gaps between components in sections
+        local colors = {
+            blue = "#569cd6",
+            green = "#6a9955",
+            purple = "#c586c0",
+            red1 = "#d16969",
+            yellow = "#dcdcaa",
+            orange = "#ce9178",
+            fg = "#d4d4d4",
+            --bg_insert = "#9e5400",
+            bg = "#007acc",
+            bg_insert = "#007acc",
+            --bg = "#3b3b3b",
+            --bg_insert = "#3b3b3b",
+            bg_visual = "#68217a",
+            bg_inactive = "#252525",
+            gray1 = "#5c6370",
+            gray2 = "#2c323d",
+            gray3 = "#3e4452",
+            white = "#ffffff",
+        }
+        local empty = require("lualine.component"):extend()
+        local function process_sections(sections)
+            for name, section in pairs(sections) do
+                local left = name:sub(9, 10) < "x"
+                for pos = 1, name ~= "lualine_z" and #section or #section - 1 do
+                    table.insert(section, pos * 2, { empty, color = { fg = colors.white, bg = colors.white } })
+                end
+                for id, comp in ipairs(section) do
+                    if type(comp) ~= "table" then
+                        comp = { comp }
+                        section[id] = comp
+                    end
+                    comp.separator = left and { right = "" } or { left = "" }
+                end
+            end
+            return sections
+        end
 
-        --local buffer = {
-        --"buffers",
-        --mode = 0,
-        --show_filename_only = true,
-        --show_modified_status = true,
-        --hide_filename_extension = false,
-        --symbols = { alternate_file = "" },
-        --buffers_color = {
-        --active = { fg = "#d3d3d3" },
-        --inactive = { fg = "#414141" },
-        --},
-        --}
+        -- LuaFormatter on
+        local custom_theme = {
+            normal = {
+                a = { fg = colors.fg, bg = colors.bg, gui = "bold" },
+                b = { fg = colors.fg, bg = colors.bg },
+                c = { fg = colors.fg, bg = colors.bg },
+            },
+            insert = {
+                a = { fg = colors.fg, bg = colors.bg_insert, gui = "bold" },
+                b = { fg = colors.fg, bg = colors.bg_insert, gui = "bold" },
+                c = { fg = colors.fg, bg = colors.bg_insert, gui = "bold" },
+            },
+            visual = {
+                a = { fg = colors.fg, bg = colors.bg_visual, gui = "bold" },
+                b = { fg = colors.fg, bg = colors.bg_visual, gui = "bold" },
+                c = { fg = colors.fg, bg = colors.bg_visual, gui = "bold" },
+            },
+            command = {
+                a = { fg = colors.fg, bg = colors.bg, gui = "bold" },
+            },
+            replace = { a = { fg = colors.fg, bg = colors.bg, gui = "bold" } },
+            inactive = {
+                a = { fg = colors.fg, bg = colors.bg },
+                b = { fg = colors.fg, bg = colors.bg },
+                c = { fg = colors.fg, bg = colors.bg },
+            },
+        }
 
         require("lualine").setup({
             options = {
                 icons_enabled = true,
-                theme = "darkplus_old",
-                component_separators = { left = "", right = "" },
-                section_separators = { left = "", right = "" },
+                theme = custom_theme,
+                component_separators = "",
                 disabled_filetypes = { "alpha", "dashboard", "lazy" },
                 always_divide_middle = true,
                 globalstatus = true,
             },
-            sections = {
-                --lualine_a = { "mode" },
-                lualine_a = { "" },
-                lualine_b = { "branch" },
-                lualine_c = { "" },
-                --lualine_x = { "diff", "diagnostics" },
-                lualine_x = { "" },
+            sections = process_sections({
+                lualine_a = {},
+                lualine_b = {
+                    {
+                        "branch",
+                        icon = "",
+                        color = { fg = "#ededed", bg = "#5c6370" },
+                        left_padding = 2,
+                    },
+                },
+                lualine_c = {
+                    { "filename" }, -- Moved filename to center
+                },
+                lualine_x = {
+                    {
+                        function()
+                            return " "
+                        end,
+                    }, -- invisible space, acts as filler
+                },
                 lualine_y = { lspStatus },
-                --lualine_y = { lspStatus, "filetype" },
-                --lualine_z = { "progress" },
-                lualine_z = { "" },
-            },
+                lualine_z = {},
+            }),
         })
     end,
 }
