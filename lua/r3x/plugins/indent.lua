@@ -6,10 +6,13 @@ return {
         opts = {
             scope = {
                 show_start = false,
-		show_end = false,
+                show_end = false,
                 include = {
                     node_type = { "*" },
                 },
+            },
+            indent = {
+                char = "┆", -- Change the symbol for the indent line
             },
         },
         exclude = {

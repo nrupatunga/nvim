@@ -19,7 +19,7 @@ return {
                 return msg
             end,
             icon = " ",
-            color = { fg = "#ffffff", bg = "#5c6370" },
+            color = { fg = "#ffffff", bg = "#3e4452" },
         }
         -- Put proper separators and gaps between components in sections
         local colors = {
@@ -41,6 +41,7 @@ return {
             gray2 = "#2c323d",
             gray3 = "#3e4452",
             white = "#ffffff",
+            snow = "#fff0f0",
         }
         local empty = require("lualine.component"):extend()
         local function process_sections(sections)
@@ -103,20 +104,17 @@ return {
                     {
                         "branch",
                         icon = "",
-                        color = { fg = "#ededed", bg = "#5c6370" },
+                        color = { fg = colors.snow, bg = colors.gray3 },
                         left_padding = 2,
                     },
                 },
                 lualine_c = {
-                    { "filename" }, -- Moved filename to center
-                },
-                lualine_x = {
                     {
-                        function()
-                            return " "
-                        end,
-                    }, -- invisible space, acts as filler
+                        "filename",
+                        symbols = { modified = " ●", readonly = " ", unnamed = " [No Name]", newfile = " [New]" },
+                    }, -- Moved filename to center
                 },
+                lualine_x = {},
                 lualine_y = { lspStatus },
                 lualine_z = {},
             }),

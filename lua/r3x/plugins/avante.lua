@@ -3,8 +3,6 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     version = false,
     opts = {
-        -- add any opts here
-        -- for example
         provider = "copilot",
         cursor_applying_provider = "copilot",
         behaviour = {
@@ -21,6 +19,10 @@ return {
             toggle = {
                 default = "<leader>w",
             },
+            submit = {
+                normal = "<CR>",
+                insert = "<CR>",
+            },
         },
     },
     build = "make",
@@ -30,10 +32,8 @@ return {
         "nvim-lua/plenary.nvim",
         "MunifTanjim/nui.nvim",
         --- The below dependencies are optional,
-        "echasnovski/mini.pick", -- for file_selector provider mini.pick
         "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
         "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
-        "ibhagwan/fzf-lua", -- for file_selector provider fzf
         "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
         "zbirenbaum/copilot.lua", -- for providers='copilot'
         {
@@ -50,6 +50,10 @@ return {
                     },
                     -- required for Windows users
                     use_absolute_path = true,
+                },
+                keys = {
+                    -- suggested keymap
+                    { "<leader>pi", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
                 },
             },
         },
