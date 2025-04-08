@@ -13,6 +13,12 @@ return {
         },
         windows = {
             width = 40,
+            sidebar_header = {
+                enabled = true,
+                align = "center",
+                rounded = true,
+            },
+            border = "single",
         },
         mappings = {
             ask = "<leader>w",
