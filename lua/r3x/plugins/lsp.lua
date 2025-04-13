@@ -16,6 +16,31 @@ return {
         dependencies = {
             --"ray-x/lsp_signature.nvim",
             "RRethy/vim-illuminate",
+            config = function()
+                require("illuminate").configure({
+                    providers = {
+                        "treesitter",
+                        "regex", -- disable LSP completely
+                    },
+                    delay = 120,
+                    under_cursor = false,
+                    large_file_cutoff = 2000,
+                    large_file_overrides = {
+                        providers = { "regex" },
+                    },
+                    filetypes_denylist = {
+                        "dirvish",
+                        "fugitive",
+                        "alpha",
+                        "NvimTree",
+                        "lazy",
+                        "TelescopePrompt",
+                        "DressingSelect",
+                        "mason",
+                        "", -- unnamed buffers
+                    },
+                })
+            end,
         },
         event = "BufReadPre",
         config = function()

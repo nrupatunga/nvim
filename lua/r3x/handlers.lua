@@ -141,7 +141,13 @@ M.on_attach = function(client, bufnr)
     client.server_capabilities.semanticTokensProvider = nil
     lsp_keymaps(bufnr)
 
-    require("illuminate").on_attach(client)
+    if client.server_capabilities.documentHighlightProvider then
+        local ok, illuminate = pcall(require, "illuminate")
+        if ok then
+            illuminate.on_attach(client)
+        end
+    end
+    --require("illuminate").on_attach(client)
     --require("lsp_signature").on_attach(signature_cfg, bufnr)
     --require("nvim-navbuddy").attach(client, bufnr)
 end
