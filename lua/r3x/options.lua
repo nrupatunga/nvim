@@ -45,8 +45,8 @@ vim.cmd("set guicursor+=i:block-Cursor")
 vim.cmd("set guicursor=n-v-c:block-Cursor")
 vim.cmd("set guicursor+=n-v-c:blinkon0")
 vim.cmd("set guicursor+=i:blinkwait20")
-vim.cmd("au InsertLeave * hi Cursor guibg=yellow")
-vim.cmd("au InsertEnter * hi Cursor guibg=yellow")
+vim.cmd("au InsertLeave * hi Cursor guibg=white")
+vim.cmd("au InsertEnter * hi Cursor guibg=white")
 
 -- gui configuration
 vim.cmd("highlight   Pmenu         ctermfg=0 ctermbg=2")
