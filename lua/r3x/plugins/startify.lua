@@ -1,5 +1,6 @@
 return {
     "goolord/alpha-nvim",
+    commit = "de72250e054e5e691b9736ee30db72c65d560771",
     requires = { "nvim-tree/nvim-web-devicons" },
     config = function()
         local alpha = require("alpha")
