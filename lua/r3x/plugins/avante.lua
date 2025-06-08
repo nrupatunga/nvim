@@ -8,8 +8,10 @@ return {
         behaviour = {
             enable_cursor_planning_mode = true,
         },
-        openai = {
-            model = "gpt-4o",
+        providers = {
+            openai = {
+                model = "gpt-4o",
+            },
         },
         windows = {
             width = 40,
