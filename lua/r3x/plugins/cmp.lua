@@ -1,170 +1,174 @@
 return {
-    "hrsh7th/nvim-cmp",
-    event = { "BufReadPre", "BufNewFile", "InsertEnter" },
-    --event = { "InsertEnter" },
+    "saghen/blink.cmp",
+    lazy = false,
     dependencies = {
+        "rafamadriz/friendly-snippets",
         "L3MON4D3/LuaSnip",
-        "hrsh7th/cmp-nvim-lsp",
-        "saadparwaiz1/cmp_luasnip",
-        "hrsh7th/cmp-path",
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-nvim-lsp-signature-help",
+        "giuxtaposition/blink-cmp-copilot",
     },
-    config = function()
-        local luasnip = require("luasnip")
-        local cmp = require("cmp")
-        local kind_icons = {
-            Text = "󰉿",
-            Method = "󰆧",
-            Function = "󰊕",
-            Constructor = "",
-            Field = "󰜢",
-            Variable = "󰀫",
-            Class = "",
-            Copilot = "",
-            Codeium = "",
-            Interface = "",
-            Module = "",
-            Property = "",
-            Unit = "",
-            Value = "󰎠",
-            Enum = "",
-            Keyword = "",
-            Snippet = "",
-            Color = "🎨",
-            File = "📄",
-            Reference = "",
-            Folder = "󰉋",
-            EnumMember = "",
-            Constant = "",
-            Struct = "",
-            Event = "",
-            Operator = "",
-            TypeParameter = "󰗴",
-            Robot = "🤖",
-        }
-
-        local borderstyle = {
-            border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-            winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
-        }
-        local check_backspace = function()
-            local col = vim.fn.col(".") - 1
-            return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
-        end
-
-        cmp.setup({
-            snippet = {
-                expand = function(args)
-                    luasnip.lsp_expand(args.body)
-                end,
+    version = "v0.*",
+    opts = {
+        keymap = { 
+            preset = 'none',
+            ['<Tab>'] = { 'select_next', 'fallback' },
+            ['<S-Tab>'] = { 'select_prev', 'fallback' },
+            ['<CR>'] = { 'accept', 'fallback' },
+            ['<C-e>'] = { 'cancel', 'fallback' },
+            ['<C-y>'] = { 'accept', 'fallback' },
+        },
+        appearance = {
+            use_nvim_cmp_as_default = true,
+            nerd_font_variant = 'normal',
+            kind_icons = {
+                Text = "󰉿",
+                Method = "󰆧", 
+                Function = "󰊕",
+                Constructor = "",
+                Field = "󰜢",
+                Variable = "󰀫",
+                Class = "",
+                Copilot = "",
+                Interface = "",
+                Module = "",
+                Property = "",
+                Unit = "",
+                Value = "󰎠",
+                Enum = "",
+                Keyword = "",
+                Snippet = "",
+                Color = "🎨",
+                File = "📄",
+                Reference = "",
+                Folder = "󰉋",
+                EnumMember = "",
+                Constant = "",
+                Struct = "",
+                Event = "",
+                Operator = "",
+                TypeParameter = "󰗴",
+            }
+        },
+        sources = {
+            default = { 'lsp', 'path', 'snippets', 'buffer', 'copilot' },
+            providers = {
+                copilot = {
+                    name = "copilot",
+                    module = "blink-cmp-copilot",
+                    score_offset = 100,
+                    async = true,
+                },
             },
-            mapping = cmp.mapping.preset.insert({
-                ["<C-e>"] = cmp.mapping({
-                    i = cmp.mapping.abort(),
-                    c = cmp.mapping.close(),
-                }),
-                ["<CR>"] = cmp.mapping.confirm({ select = true }),
-                ["<Tab>"] = cmp.mapping(function(fallback)
-                    if cmp.visible() then
-                        cmp.select_next_item()
-                    elseif require("copilot.suggestion").is_visible() then
-                        require("copilot.suggestion").accept()
-                    elseif luasnip.expandable() then
-                        luasnip.expand()
-                    elseif vim.fn.exists("b:_codeium_completions") ~= 0 then
-                        -- accept codeium completion if visible
-                        vim.api.nvim_input(vim.fn["codeium#Accept"]())
-                        fallback()
-                    elseif luasnip.expand_or_jumpable() then
-                        luasnip.expand_or_jump()
-                        --luasnip.expand()
-                    elseif check_backspace() then
-                        fallback()
-                    else
-                        fallback()
-                    end
-                end, {
-                    "i",
-                    "s",
-                }),
-                ["<S-Tab>"] = cmp.mapping(function(fallback)
-                    if cmp.visible() then
-                        cmp.select_prev_item()
-                    elseif luasnip.jumpable(-1) then
-                        luasnip.jump(-1)
-                    else
-                        fallback()
-                    end
-                end, {
-                    "i",
-                    "s",
-                }),
-            }),
-            formatting = {
-                fields = { "kind", "abbr", "menu" },
-                format = function(entry, vim_item)
-                    local ELLIPSIS_CHAR = "…"
-                    local MAX_LABEL_WIDTH = 50
-                    local MIN_LABEL_WIDTH = 50
-                    local label = vim_item.abbr
-                    local truncated_label = vim.fn.strcharpart(label, 0, MAX_LABEL_WIDTH)
-
-                    vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
-                    vim_item.menu = ({
-                        nvim_lsp = "[LSP]",
-                        luasnip = "[Snip]",
-                        buffer = "[Buff]",
-                        copilot = "[AI]",
-                        path = "[Path]",
-                    })[entry.source.name]
-                    if truncated_label ~= label then
-                        vim_item.abbr = truncated_label .. ELLIPSIS_CHAR
-                    elseif string.len(label) < MIN_LABEL_WIDTH then
-                        local padding = string.rep(" ", MIN_LABEL_WIDTH - string.len(label))
-                        vim_item.abbr = label .. padding
-                    end
-                    return vim_item
-                end,
+        },
+        completion = {
+            accept = {
+                auto_brackets = {
+                    enabled = true,
+                },
             },
-            preselect = cmp.PreselectMode.None,
-            completion = { completeopt = "noselect" },
-            sources = cmp.config.sources({
-                { name = "nvim_lsp_signature_help" },
-                { name = "nvim_lsp" },
-                { name = "copilot" },
-                { name = "luasnip" },
-                {
-                    name = "buffer",
-                    option = {
-                        get_bufnrs = function()
-                            return vim.api.nvim_list_bufs()
-                        end,
+            list = {
+                selection = "manual", -- equivalent to noselect
+            },
+            ghost_text = {
+                enabled = false, -- you had this disabled
+            },
+        },
+        completion = {
+            menu = {
+                border = 'rounded',
+                winhighlight = 'Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
+                draw = {
+                    treesitter = { "lsp" },
+                    columns = { 
+                        { "kind_icon" }, 
+                        { "label", "label_description", gap = 1 }, 
+                        { "source_name" } 
+                    },
+                    components = {
+                        kind_icon = {
+                            text = function(ctx)
+                                local kind_icons = {
+                                    Text = "󰉿",
+                                    Method = "󰆧", 
+                                    Function = "󰊕",
+                                    Constructor = "",
+                                    Field = "󰜢",
+                                    Variable = "󰀫",
+                                    Class = "",
+                                    Copilot = "",
+                                    Interface = "",
+                                    Module = "",
+                                    Property = "",
+                                    Unit = "",
+                                    Value = "󰎠",
+                                    Enum = "",
+                                    Keyword = "",
+                                    Snippet = "",
+                                    Color = "🎨",
+                                    File = "📄",
+                                    Reference = "",
+                                    Folder = "󰉋",
+                                    EnumMember = "",
+                                    Constant = "",
+                                    Struct = "",
+                                    Event = "",
+                                    Operator = "",
+                                    TypeParameter = "󰗴",
+                                }
+                                return kind_icons[ctx.kind] or ctx.kind_icon or ""
+                            end,
+                            highlight = function(ctx)
+                                return "BlinkCmpKind" .. ctx.kind
+                            end,
+                        },
+                        label = {
+                            width = { max = 30 },
+                            text = function(ctx)
+                                local label = ctx.label
+                                if string.len(label) > 30 then
+                                    return string.sub(label, 1, 27) .. "…"
+                                end
+                                return label
+                            end,
+                        },
+                        source_name = {
+                            width = { max = 8 },
+                            text = function(ctx)
+                                local source_names = {
+                                    lsp = "[LSP]",
+                                    snippets = "[Snip]", 
+                                    buffer = "[Buff]",
+                                    copilot = "[AI]",
+                                    path = "[Path]",
+                                }
+                                return source_names[ctx.source_name] or "[" .. ctx.source_name .. "]"
+                            end,
+                            highlight = "BlinkCmpSource",
+                        },
                     },
                 },
-                { name = "path" },
-            }),
-            duplicates = {
-                nvim_lsp = 1,
-                luasnip = 1,
-                buffer = 1,
-                path = 1,
-                signature = 1,
             },
-            confirm_opts = {
-                behavior = cmp.ConfirmBehavior.Replace,
-                select = false,
+            documentation = {
+                auto_show = true,
+                auto_show_delay_ms = 200,
+                window = {
+                    border = 'rounded',
+                    winhighlight = 'Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None',
+                },
             },
+        },
+        signature = { 
+            enabled = true,
             window = {
-                completion = borderstyle,
-                documentation = borderstyle,
+                border = 'rounded',
             },
-            experimental = {
-                ghost_text = false,
-                native_menu = false,
-            },
-        })
-
+        },
+        snippets = {
+            preset = 'luasnip',
+        },
+    },
+    opts_extend = { "sources.default" },
+    config = function(_, opts)
+        require('blink.cmp').setup(opts)
         require("luasnip/loaders/from_vscode").lazy_load({ paths = vim.fn.stdpath("config") .. "/snippets" })
     end,
 }

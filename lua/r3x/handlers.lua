@@ -70,18 +70,14 @@ M.setup = function()
     --    end,
     -- })
 
-    -- inlay hints
-    vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
-    vim.api.nvim_create_autocmd("LspAttach", {
-        group = "LspAttach_inlayhints",
-        callback = function(args)
-            if not (args.data and args.data.client_id) then
-                return
-            end
 
-            local bufnr = args.buf
+    -- Native inlay hints (Neovim 0.10+)
+    vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
             local client = vim.lsp.get_client_by_id(args.data.client_id)
-            require("lsp-inlayhints").on_attach(client, bufnr)
+            if client and client.server_capabilities.inlayHintProvider then
+                vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+            end
         end,
     })
 
@@ -121,11 +117,20 @@ local function lsp_keymaps(bufnr)
     keymap(bufnr, "n", "<c-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
     keymap(bufnr, "i", "<c-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
     keymap(bufnr, "n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
+    vim.keymap.set("n", "<leader>lh", function()
+        require('lsp-endhints').toggle()
+    end, { buffer = bufnr, noremap = true, silent = true })
 end
 
-M.capabilities = require("cmp_nvim_lsp").default_capabilities()
+M.capabilities = require('blink.cmp').get_lsp_capabilities()
 
 M.on_attach = function(client, bufnr)
+    -- Ensure bufnr is a number
+    bufnr = bufnr or vim.api.nvim_get_current_buf()
+    if type(bufnr) ~= "number" then
+        vim.notify("Invalid buffer number in on_attach: " .. tostring(bufnr), vim.log.levels.ERROR)
+        return
+    end
     if client.name == "tsserver" then
         client.server_capabilities.documentFormattingProvider = false
     end

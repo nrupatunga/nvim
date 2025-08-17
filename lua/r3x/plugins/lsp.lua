@@ -143,40 +143,11 @@ return {
             require("r3x.handlers").setup()
         end,
     },
-    -- inlay hints
+    -- inlay hints at end of line
     {
-        "lvimuser/lsp-inlayhints.nvim",
+        "chrisgrieser/nvim-lsp-endhints",
         event = "LspAttach",
-        keys = {
-            {
-                "<leader>lh",
-                function()
-                    require("lsp-inlayhints").toggle()
-                end,
-                desc = "Toggle inlay hints",
-            },
-        },
-        opts = {
-            inlay_hints = {
-                parameter_hints = {
-                    show = true,
-                    prefix = "<- ",
-                    separator = ", ",
-                    remove_colon_start = false,
-                    remove_colon_end = true,
-                },
-                type_hints = {
-                    show = true,
-                    prefix = " » ",
-                    separator = ", ",
-                    remove_colon_start = false,
-                    remove_colon_end = false,
-                },
-                only_current_line = false,
-                labels_separator = "  ", -- gap between type hints and parameter hints
-                highlight = "Comment", -- see `:highlight` for more options
-            },
-        },
+        opts = {}, -- required, even if empty
     },
     -- code formatters
     {
@@ -193,14 +164,13 @@ return {
             null_ls.setup({
                 debug = false,
                 on_attach = function(client, bufnr)
-                    if client.supports_method("textdocument/formatting") then
+                    if client.supports_method("textDocument/formatting") then
                         vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
                         vim.api.nvim_create_autocmd("bufwritepre", {
                             group = augroup,
                             buffer = bufnr,
                             callback = function()
-                                -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-                                vim.lsp.buf.formatting_sync()
+                                vim.lsp.buf.format({ bufnr = bufnr })
                             end,
                         })
                     end
