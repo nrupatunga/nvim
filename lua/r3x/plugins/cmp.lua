@@ -8,20 +8,20 @@ return {
     },
     version = "v0.*",
     opts = {
-        keymap = { 
-            preset = 'none',
-            ['<Tab>'] = { 'select_next', 'fallback' },
-            ['<S-Tab>'] = { 'select_prev', 'fallback' },
-            ['<CR>'] = { 'accept', 'fallback' },
-            ['<C-e>'] = { 'cancel', 'fallback' },
-            ['<C-y>'] = { 'accept', 'fallback' },
+        keymap = {
+            preset = "none",
+            ["<Tab>"] = { "select_next", "fallback" },
+            ["<S-Tab>"] = { "select_prev", "fallback" },
+            ["<CR>"] = { "accept", "fallback" },
+            ["<C-e>"] = { "cancel", "fallback" },
+            ["<C-y>"] = { "accept", "fallback" },
         },
         appearance = {
             use_nvim_cmp_as_default = true,
-            nerd_font_variant = 'normal',
+            nerd_font_variant = "normal",
             kind_icons = {
                 Text = "󰉿",
-                Method = "󰆧", 
+                Method = "󰆧",
                 Function = "󰊕",
                 Constructor = "",
                 Field = "󰜢",
@@ -46,10 +46,10 @@ return {
                 Event = "",
                 Operator = "",
                 TypeParameter = "󰗴",
-            }
+            },
         },
         sources = {
-            default = { 'lsp', 'path', 'snippets', 'buffer', 'copilot' },
+            default = { "lsp", "path", "snippets", "buffer", "copilot" },
             providers = {
                 copilot = {
                     name = "copilot",
@@ -74,21 +74,21 @@ return {
         },
         completion = {
             menu = {
-                border = 'rounded',
-                winhighlight = 'Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
+                border = "rounded",
+                winhighlight = "Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
                 draw = {
                     treesitter = { "lsp" },
-                    columns = { 
-                        { "kind_icon" }, 
-                        { "label", "label_description", gap = 1 }, 
-                        { "source_name" } 
+                    columns = {
+                        { "kind_icon" },
+                        { "label", "label_description", gap = 1 },
+                        { "source_name" },
                     },
                     components = {
                         kind_icon = {
                             text = function(ctx)
                                 local kind_icons = {
                                     Text = "󰉿",
-                                    Method = "󰆧", 
+                                    Method = "󰆧",
                                     Function = "󰊕",
                                     Constructor = "",
                                     Field = "󰜢",
@@ -135,7 +135,7 @@ return {
                             text = function(ctx)
                                 local source_names = {
                                     lsp = "[LSP]",
-                                    snippets = "[Snip]", 
+                                    snippets = "[Snip]",
                                     buffer = "[Buff]",
                                     copilot = "[AI]",
                                     path = "[Path]",
@@ -151,24 +151,24 @@ return {
                 auto_show = true,
                 auto_show_delay_ms = 200,
                 window = {
-                    border = 'rounded',
-                    winhighlight = 'Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None',
+                    border = "rounded",
+                    winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
                 },
             },
         },
-        signature = { 
+        signature = {
             enabled = true,
             window = {
-                border = 'rounded',
+                border = "rounded",
             },
         },
         snippets = {
-            preset = 'luasnip',
+            preset = "luasnip",
         },
     },
     opts_extend = { "sources.default" },
     config = function(_, opts)
-        require('blink.cmp').setup(opts)
+        require("blink.cmp").setup(opts)
         require("luasnip/loaders/from_vscode").lazy_load({ paths = vim.fn.stdpath("config") .. "/snippets" })
     end,
 }

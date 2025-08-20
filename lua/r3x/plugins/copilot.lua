@@ -2,10 +2,9 @@ return {
     "zbirenbaum/copilot.lua",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-        "zbirenbaum/copilot-cmp",
+        "giuxtaposition/blink-cmp-copilot",
     },
     config = function()
         require("copilot").setup({ suggestion = { enabled = false }, panel = { enabled = false } })
-        require("copilot_cmp").setup()
     end,
 }

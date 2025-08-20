@@ -67,7 +67,7 @@ This is a Neovim configuration written in Lua, organized as a modular plugin sys
 - **Fuzzy Finding**: telescope.nvim with fzf-native
 - **Navigation**: harpoon, hop
 - **UI**: lualine, dressing, notify, themes
-- **Completion**: nvim-cmp
+- **Completion**: blink.cmp
 - **Git**: diffview, blame, octo
 - **AI/Copilot**: copilot, avante, gen
 - **Editing**: treesitter, autopairs, mini, scissors
