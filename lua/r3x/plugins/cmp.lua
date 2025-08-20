@@ -74,13 +74,11 @@ return {
                 },
             },
             list = {
-                selection = "manual", -- equivalent to noselect
+                selection = { preselect = false, auto_insert = true },
             },
             ghost_text = {
                 enabled = false, -- you had this disabled
             },
-        },
-        completion = {
             menu = {
                 border = "rounded",
                 winhighlight = "Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
@@ -129,11 +127,11 @@ return {
                             end,
                         },
                         label = {
-                            width = { max = 30 },
+                            width = { max = 40 },
                             text = function(ctx)
                                 local label = ctx.label
-                                if string.len(label) > 30 then
-                                    return string.sub(label, 1, 27) .. "…"
+                                if string.len(label) > 40 then
+                                    return string.sub(label, 1, 37) .. "…"
                                 end
                                 return label
                             end,
@@ -178,5 +176,8 @@ return {
     config = function(_, opts)
         require("blink.cmp").setup(opts)
         require("luasnip/loaders/from_vscode").lazy_load({ paths = vim.fn.stdpath("config") .. "/snippets" })
+        
+        -- Set yellow highlight for selected item
+        vim.api.nvim_set_hl(0, "BlinkCmpMenuSelection", { bg = "#3c3d00", fg = "#ffffff" })
     end,
 }
