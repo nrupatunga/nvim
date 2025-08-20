@@ -31,11 +31,11 @@ return {
             desc = "Shows document symbols",
         },
         -- Old files functionality moved to fff.nvim (<leader>o)
-        -- {
-        --     "<leader>o",
-        --     "<cmd>lua require'telescope.builtin'.oldfiles(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
-        --     desc = "Shows old files opened",
-        -- },
+        {
+            "<leader>o",
+            "<cmd>lua require'telescope.builtin'.oldfiles(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
+            desc = "Shows old files opened",
+        },
         --{ "<leader>gr", "<cmd>Telescope live_grep<CR>", desc = "Find texts" },
         --{ "<leader>gw", "<cmd>Telescope grep_string<CR>", { silent = true, desc = "grep string under cursor" } },
         {

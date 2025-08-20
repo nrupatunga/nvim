@@ -118,13 +118,13 @@ return {
             end,
             desc = "Find git files",
         },
-        {
-            "<leader>o",
-            function()
-                -- fff.nvim uses frecency for recent files, so we use find_files() with frecency enabled
-                require("fff").find_files()
-            end,
-            desc = "Find recent files (frecency)",
-        },
+        --{
+            --"<leader>o",
+            --function()
+                ---- fff.nvim uses frecency for recent files, so we use find_files() with frecency enabled
+                --require("fff").find_files()
+            --end,
+            --desc = "Find recent files (frecency)",
+        --},
     },
 }
