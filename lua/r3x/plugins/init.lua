@@ -20,7 +20,7 @@ return {
     },
     {
         "folke/persistence.nvim",
-        lazy = false,
+        event = "VimEnter",
         opts = {},
     },
     {

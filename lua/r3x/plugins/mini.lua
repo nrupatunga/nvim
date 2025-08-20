@@ -2,7 +2,7 @@ return {
     "echasnovski/mini.nvim",
     version = false,
     --event = "VeryLazy",
-    event = { "BufReadPre", "BufNewFile" },
+    event = "VeryLazy",
 		lazy = true,
     keys = {
         { "<leader>e", "<cmd>lua MiniFiles.open()<CR>", desc = "mini.files toggle" },

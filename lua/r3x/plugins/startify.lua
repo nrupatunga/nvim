@@ -1,5 +1,6 @@
 return {
     "goolord/alpha-nvim",
+    event = "VimEnter",
     commit = "de72250e054e5e691b9736ee30db72c65d560771",
     requires = { "nvim-tree/nvim-web-devicons" },
     config = function()

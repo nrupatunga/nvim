@@ -1,6 +1,6 @@
 return {
     "saghen/blink.cmp",
-    lazy = false,
+    event = "InsertEnter",
     dependencies = {
         "rafamadriz/friendly-snippets",
         "L3MON4D3/LuaSnip",
@@ -8,6 +8,14 @@ return {
     },
     version = "v0.*",
     opts = {
+        enabled = function()
+            -- Disable in LSP rename contexts (prompt buffers, nofile buffers)
+            local buftype = vim.bo.buftype
+            if buftype == "prompt" or buftype == "nofile" then
+                return false
+            end
+            return true
+        end,
         keymap = {
             preset = "none",
             ["<Tab>"] = { "select_next", "fallback" },
