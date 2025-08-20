@@ -44,7 +44,7 @@ return {
         "MunifTanjim/nui.nvim",
         --- The below dependencies are optional,
         "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-        -- "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+        "hrsh7th/nvim-cmp", -- required by avante for completion source registration
         "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
         "zbirenbaum/copilot.lua", -- for providers='copilot'
         {
@@ -62,10 +62,10 @@ return {
                     -- required for Windows users
                     use_absolute_path = true,
                 },
-                keys = {
-                    -- suggested keymap
-                    { "<leader>pi", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
-                },
+            },
+            keys = {
+                -- suggested keymap
+                { "<leader>pi", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
             },
         },
         {

@@ -8,16 +8,17 @@ return {
     },
     cmd = { "Telescope find_files" },
     keys = {
-        {
-            "<leader>f",
-            "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
-            desc = "Find files",
-        },
-        {
-            "<leader>F",
-            "<cmd>lua require'telescope.builtin'.git_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
-            desc = "Find git files",
-        },
+        -- File finding moved to fff.nvim
+        -- {
+        --     "<leader>f",
+        --     "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
+        --     desc = "Find files",
+        -- },
+        -- {
+        --     "<leader>F",
+        --     "<cmd>lua require'telescope.builtin'.git_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
+        --     desc = "Find git files",
+        -- },
         {
             "<leader>y",
             "<cmd>lua require'telescope.builtin'.marks(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
@@ -29,11 +30,12 @@ return {
             "<cmd>lua require'telescope.builtin'.lsp_document_symbols(require('telescope.themes').get_dropdown({ previewer = true, symbol_width=42 }))<cr>",
             desc = "Shows document symbols",
         },
-        {
-            "<leader>o",
-            "<cmd>lua require'telescope.builtin'.oldfiles(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
-            desc = "Shows old files opened",
-        },
+        -- Old files functionality moved to fff.nvim (<leader>o)
+        -- {
+        --     "<leader>o",
+        --     "<cmd>lua require'telescope.builtin'.oldfiles(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
+        --     desc = "Shows old files opened",
+        -- },
         --{ "<leader>gr", "<cmd>Telescope live_grep<CR>", desc = "Find texts" },
         --{ "<leader>gw", "<cmd>Telescope grep_string<CR>", { silent = true, desc = "grep string under cursor" } },
         {
