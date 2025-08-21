@@ -23,6 +23,7 @@ return {
             ["<CR>"] = { "accept", "fallback" },
             ["<C-e>"] = { "cancel", "fallback" },
             ["<C-y>"] = { "accept", "fallback" },
+            ["<C-k>"] = { "show_documentation", "hide_documentation", "fallback" },
         },
         appearance = {
             use_nvim_cmp_as_default = true,
@@ -59,11 +60,23 @@ return {
         sources = {
             default = { "lsp", "path", "snippets", "buffer", "copilot" },
             providers = {
+                lsp = {
+                    score_offset = 5,
+                },
                 copilot = {
                     name = "copilot",
                     module = "blink-cmp-copilot",
-                    score_offset = 100,
+                    score_offset = 15,
                     async = true,
+                },
+                path = {
+                    score_offset = 3,
+                },
+                snippets = {
+                    score_offset = 0,
+                },
+                buffer = {
+                    score_offset = -3,
                 },
             },
         },
@@ -74,7 +87,7 @@ return {
                 },
             },
             list = {
-                selection = { preselect = false, auto_insert = true },
+                selection = { preselect = true, auto_insert = true },
             },
             ghost_text = {
                 enabled = false, -- you had this disabled
@@ -154,8 +167,7 @@ return {
                 },
             },
             documentation = {
-                auto_show = true,
-                auto_show_delay_ms = 200,
+                auto_show = false,
                 window = {
                     border = "rounded",
                     winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
@@ -170,6 +182,9 @@ return {
         },
         snippets = {
             preset = "luasnip",
+        },
+        fuzzy = {
+            sorts = { "score", "kind", "label" },
         },
     },
     opts_extend = { "sources.default" },
