@@ -173,8 +173,8 @@ return {
                 },
                 lualine_x = {},
                 lualine_y = { lsp_status_comp },
-                -- Right: cursor location
-                lualine_z = { "location" },
+                -- Right: empty (no line/col location)
+                lualine_z = {},
             },
             inactive_sections = {
                 lualine_a = {},
@@ -182,7 +182,7 @@ return {
                 lualine_c = { { "filename", path = 1 } },
                 lualine_x = {},
                 lualine_y = {},
-                lualine_z = { "location" },
+                lualine_z = {},
             },
             })
         end

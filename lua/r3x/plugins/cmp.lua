@@ -23,7 +23,8 @@ return {
             ["<CR>"] = { "accept", "fallback" },
             ["<C-e>"] = { "cancel", "fallback" },
             ["<C-y>"] = { "accept", "fallback" },
-            ["<C-k>"] = { "show_documentation", "hide_documentation", "fallback" },
+            -- Move documentation toggle from Ctrl-k to Shift-k
+            ["<S-k>"] = { "show_documentation", "hide_documentation", "fallback" },
         },
         appearance = {
             use_nvim_cmp_as_default = true,
