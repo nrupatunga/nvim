@@ -70,7 +70,6 @@ M.setup = function()
     --    end,
     -- })
 
-
     -- Native inlay hints (Neovim 0.10+)
     vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
@@ -118,11 +117,11 @@ local function lsp_keymaps(bufnr)
     keymap(bufnr, "i", "<c-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
     keymap(bufnr, "n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
     vim.keymap.set("n", "<leader>lh", function()
-        require('lsp-endhints').toggle()
+        require("lsp-endhints").toggle()
     end, { buffer = bufnr, noremap = true, silent = true })
 end
 
-M.capabilities = require('blink.cmp').get_lsp_capabilities()
+M.capabilities = require("blink.cmp").get_lsp_capabilities()
 
 M.on_attach = function(client, bufnr)
     -- Ensure bufnr is a number

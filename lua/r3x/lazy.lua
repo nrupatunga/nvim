@@ -17,17 +17,19 @@ local plugins = {
 }
 
 local opts = {
-    change_detection = {
-        enabled = true,
-        notify = false,
-    },
+    change_detection = { enabled = true, notify = false },
     performance = {
+        cache = { enabled = true },
+        reset_packpath = true,
         rtp = {
             disabled_plugins = {
                 "gzip",
                 "man",
                 "matchit",
+                "matchparen",
                 "netrwPlugin",
+                "netrwSettings",
+                "netrwFileHandlers",
                 "rplugin",
                 "shada",
                 "spellfile",

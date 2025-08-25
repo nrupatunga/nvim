@@ -6,7 +6,7 @@ return {
 
         { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     },
-    cmd = { "Telescope find_files" },
+    cmd = { "Telescope" },
     keys = {
         -- File finding moved to fff.nvim
         -- {

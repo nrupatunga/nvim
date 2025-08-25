@@ -1,7 +1,7 @@
 return {
   {
     "FabijanZulj/blame.nvim",
-    lazy = false,
+    event = "BufReadPost",
     config = function()
       require('blame').setup {}
     end,
