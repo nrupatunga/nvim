@@ -158,7 +158,26 @@ vim.api.nvim_create_autocmd("VimEnter", {
           if dotgit then
             require("fff").find_in_git_root()
           else
-            require("fff").find_files()
+            -- Outside Git: avoid indexing huge dirs; show recent files in cwd
+            local ok_lazy, lazy2 = pcall(require, "lazy")
+            if ok_lazy and lazy2 and lazy2.load then
+              pcall(lazy2.load, { plugins = { "telescope.nvim" } })
+            end
+            local ok_b, builtin = pcall(require, "telescope.builtin")
+            if ok_b then
+              local themes_ok, themes = pcall(require, "telescope.themes")
+              local opts = {
+                previewer = false,
+                cwd_only = true,
+                only_cwd = true,
+                initial_mode = "insert",
+                layout_config = { width = 0.45, height = 0.35 },
+              }
+              if themes_ok then
+                opts = themes.get_dropdown(opts)
+              end
+              pcall(builtin.oldfiles, opts)
+            end
           end
         end)
       end
