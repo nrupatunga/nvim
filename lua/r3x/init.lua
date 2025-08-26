@@ -137,3 +137,31 @@ vim.api.nvim_create_autocmd("VimEnter", {
         vim.schedule(set_blink_transparent)
     end,
 })
+
+-- Open recent files picker on startup when no file was given
+vim.api.nvim_create_autocmd("VimEnter", {
+  group = vim.api.nvim_create_augroup("OpenRecentOnStart", { clear = true }),
+  callback = function()
+    if vim.fn.argc() == 0 then
+      local bufnr = vim.api.nvim_get_current_buf()
+      local empty = (vim.api.nvim_buf_line_count(bufnr) == 1)
+        and (vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] == "")
+      if empty then
+        pcall(function()
+          -- Ensure fff is loaded before using its API
+          local ok_lazy, lazy = pcall(require, "lazy")
+          if ok_lazy and lazy and lazy.load then
+            pcall(lazy.load, { plugins = { "fff.nvim" } })
+          end
+          local start = vim.loop.cwd()
+          local dotgit = vim.fs.find(".git", { upward = true, path = start })[1]
+          if dotgit then
+            require("fff").find_in_git_root()
+          else
+            require("fff").find_files()
+          end
+        end)
+      end
+    end
+  end,
+})
