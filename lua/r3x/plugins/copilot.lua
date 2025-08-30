@@ -1,5 +1,5 @@
 return {
-    "zbirenbaum/copilot.lua",
+    "nrupatunga/copilot.lua",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
         "giuxtaposition/blink-cmp-copilot",
