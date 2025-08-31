@@ -1,5 +1,6 @@
 return {
-    "dmtrKovalenko/fff.nvim",
+    --"dmtrKovalenko/fff.nvim",
+    "nrupatunga/fff.nvim",
     build = "cargo build --release",
     config = function()
         require("fff").setup({
