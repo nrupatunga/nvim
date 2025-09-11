@@ -186,101 +186,24 @@ vim.api.nvim_create_autocmd("VimEnter", {
                 and (vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] == "")
             if empty then
                 pcall(function()
-                    -- Ensure fff is loaded before using its API
                     local ok_lazy, lazy = pcall(require, "lazy")
                     if ok_lazy and lazy and lazy.load then
-                        pcall(lazy.load, { plugins = { "fff.nvim" } })
+                        pcall(lazy.load, { plugins = { "telescope.nvim" } })
                     end
-                    local start = vim.loop.cwd()
-                    local dotgit = vim.fs.find(".git", { upward = true, path = start })[1]
-                    if dotgit then
-                        -- Temporarily filter out certain extensions (e.g., .mp4) for the first startup picker
-                        local fff_ok, fff = pcall(require, "fff")
-                        if fff_ok then
-                            local fp_ok, fp = pcall(require, "fff.file_picker")
-                            if fp_ok and fp and type(fp.search_files) == "function" then
-                                local orig_search = fp.search_files
-                                local pui_ok, pui = pcall(require, "fff.picker_ui")
-                                local orig_close = pui_ok and pui and pui.close
-
-                                fp.search_files = function(query, max_results, max_threads, current_file, reverse_order)
-                                    local items =
-                                        orig_search(query, max_results, max_threads, current_file, reverse_order)
-                                    if type(items) ~= "table" then
-                                        return items
-                                    end
-                                    local filtered = {}
-                                    local blocked = {
-                                        mp4 = true,
-                                        ["mp4.mp4"] = true,
-                                        mov = true,
-                                        mkv = true,
-                                        avi = true,
-                                        webm = true,
-                                        wmv = true,
-                                        m4v = true,
-                                        mpeg = true,
-                                        mpg = true,
-                                        ["3gp"] = true,
-                                        ogv = true,
-                                        flv = true,
-                                    }
-                                    for _, it in ipairs(items) do
-                                        local ext = (it.extension or ""):lower()
-                                        if not blocked[ext] then
-                                            table.insert(filtered, it)
-                                        end
-                                    end
-                                    return filtered
-                                end
-
-                                if pui_ok and orig_close then
-                                    pui.close = function(...)
-                                        local ret = { orig_close(...) }
-                                        -- Restore original search and close when picker is closed
-                                        fp.search_files = orig_search
-                                        pui.close = orig_close
-                                        -- LuaJIT/5.1 compatibility: use global unpack
-                                        return unpack(ret)
-                                    end
-                                end
-                            end
-                            fff.find_in_git_root()
-                        else
-                            -- Fallback if fff failed to load
-                            pcall(function()
-                                local ok_lazy2, lazy2 = pcall(require, "lazy")
-                                if ok_lazy2 and lazy2 and lazy2.load then
-                                    pcall(lazy2.load, { plugins = { "telescope.nvim" } })
-                                end
-                                local ok_b, builtin = pcall(require, "telescope.builtin")
-                                if ok_b then
-                                    builtin.oldfiles({ previewer = false })
-                                end
-                            end)
-                        end
-                    else
-                        -- Outside Git: avoid indexing huge dirs; show recent files in cwd
-                        local ok_lazy, lazy2 = pcall(require, "lazy")
-                        if ok_lazy and lazy2 and lazy2.load then
-                            pcall(lazy2.load, { plugins = { "telescope.nvim" } })
-                        end
-                        local ok_b, builtin = pcall(require, "telescope.builtin")
-                        if ok_b then
-                            local themes_ok, themes = pcall(require, "telescope.themes")
-                            local opts = {
-                                previewer = false,
-                                cwd_only = true,
-                                only_cwd = true,
-                                initial_mode = "insert",
-                                layout_config = { width = 0.45, height = 0.35 },
-                            }
-                            if themes_ok then
-                                opts = themes.get_dropdown(opts)
-                            end
-                            pcall(builtin.oldfiles, opts)
-                        end
+                    local ok_b, builtin = pcall(require, "telescope.builtin")
+                    if not ok_b then return end
+                    local themes_ok, themes = pcall(require, "telescope.themes")
+                    local opts = {
+                        previewer = false,
+                        cwd_only = true,
+                        only_cwd = true,
+                        initial_mode = "insert",
+                        layout_config = { width = 0.45, height = 0.35 },
+                    }
+                    if themes_ok then
+                        opts = themes.get_dropdown(opts)
                     end
+                    pcall(builtin.oldfiles, opts)
                 end)
             end
         end
