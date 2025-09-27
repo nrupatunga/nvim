@@ -1,3 +1,12 @@
+-- Suppress lspconfig deprecation warning
+local original_deprecate = vim.deprecate
+vim.deprecate = function(name, ...)
+    if name and name:match("require%('lspconfig'%)") then
+        return
+    end
+    return original_deprecate(name, ...)
+end
+
 -- Enable Lua module loader cache (Neovim 0.9+)
 pcall(function()
     if vim.loader and vim.loader.enable then
