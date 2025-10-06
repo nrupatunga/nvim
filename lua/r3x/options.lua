@@ -1,3 +1,6 @@
+-- Suppress deprecation warnings
+vim.deprecate = function() end
+
 local options = {
     autochdir = false, -- change the directory according to the file opened
     autoread = true,
