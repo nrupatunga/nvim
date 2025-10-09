@@ -208,6 +208,13 @@ vim.api.nvim_create_autocmd("VimEnter", {
                         only_cwd = true,
                         initial_mode = "insert",
                         layout_config = { width = 0.45, height = 0.35 },
+                        -- Suppress error when no selection is made
+                        attach_mappings = function(_, map)
+                            local actions = require("telescope.actions")
+                            map("i", "<esc>", actions.close)
+                            map("n", "<esc>", actions.close)
+                            return true
+                        end,
                     }
                     if themes_ok then
                         opts = themes.get_dropdown(opts)
