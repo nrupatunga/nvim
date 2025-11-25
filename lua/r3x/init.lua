@@ -7,6 +7,15 @@ vim.deprecate = function(name, ...)
     return original_deprecate(name, ...)
 end
 
+-- Suppress treesitter decoration provider errors (index out of bounds)
+local original_notify = vim.notify
+vim.notify = function(msg, level, opts)
+    if type(msg) == "string" and msg:match("Index out of bounds") and msg:match("treesitter") then
+        return
+    end
+    return original_notify(msg, level, opts)
+end
+
 -- Enable Lua module loader cache (Neovim 0.9+)
 pcall(function()
     if vim.loader and vim.loader.enable then
@@ -22,6 +31,7 @@ require("r3x.lazy")
 --vim.cmd([[colorscheme kanagawa-dragon]])
 --vim.cmd([[colorscheme vague]])
 vim.cmd([[colorscheme github_dark_high_contrast]])
+--vim.cmd([[colorscheme murphy]])
 --vim.cmd([[colorscheme gruvbox]])
 --vim.cmd([[colorscheme night-owl]])
 --vim.cmd([[colorscheme carbonfox]])

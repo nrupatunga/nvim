@@ -134,7 +134,6 @@ return {
                 auto_install = false,
                 highlight = {
                     enable = true,
-                    extended_mode = true,
                     additional_vim_regex_highlighting = false,
                 },
                 context_commentstring = {
