@@ -205,30 +205,31 @@ vim.api.nvim_create_autocmd("VimEnter", {
                 and (vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] == "")
             if empty then
                 pcall(function()
-                    local height = 0.60
-                    local width = 0.60
-                    local center_row = (1 - height) / 2
-                    local center_col = (1 - width) / 2
                     local ok_lazy, lazy = pcall(require, "lazy")
                     if ok_lazy and lazy and lazy.load then
-                        pcall(lazy.load, { plugins = { "fzf-lua" } })
+                        pcall(lazy.load, { plugins = { "telescope.nvim" } })
                     end
-                    local ok_fzf, fzf = pcall(require, "fzf-lua")
-                    if not ok_fzf then return end
-                    fzf.oldfiles({
+                    local ok_b, builtin = pcall(require, "telescope.builtin")
+                    if not ok_b then return end
+                    local themes_ok, themes = pcall(require, "telescope.themes")
+                    local opts = {
+                        previewer = false,
                         cwd_only = true,
-                        prompt = "Recent > ",
-                        winopts = {
-                            height = height,
-                            width = width,
-                            row = 0.50,
-                            col = 0.50,
-                            anchor = "CENTER",
-                            relative = "editor",
-                            border = "rounded",
-                            preview = { layout = "none" },
-                        },
-                    })
+                        only_cwd = true,
+                        initial_mode = "insert",
+                        layout_config = { width = 0.45, height = 0.35 },
+                        -- Suppress error when no selection is made
+                        attach_mappings = function(_, map)
+                            local actions = require("telescope.actions")
+                            map("i", "<esc>", actions.close)
+                            map("n", "<esc>", actions.close)
+                            return true
+                        end,
+                    }
+                    if themes_ok then
+                        opts = themes.get_dropdown(opts)
+                    end
+                    pcall(builtin.oldfiles, opts)
                 end)
             end
         end

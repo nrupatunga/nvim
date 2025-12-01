@@ -7,7 +7,48 @@ return {
         { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     },
     cmd = { "Telescope" },
-    keys = {},
+    keys = {
+        -- File finding moved to fff.nvim
+        -- {
+        --     "<leader>f",
+        --     "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
+        --     desc = "Find files",
+        -- },
+        -- {
+        --     "<leader>F",
+        --     "<cmd>lua require'telescope.builtin'.git_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
+        --     desc = "Find git files",
+        -- },
+        {
+            "<leader>y",
+            "<cmd>lua require'telescope.builtin'.marks(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
+            desc = "Shows marks",
+        },
+        {
+            "<leader>t",
+            --"<cmd>lua require'telescope.builtin'.lsp_document_symbols(require('telescope.themes').get_dropdown({ previewer = false }), {symbol_width = 200})<cr>",
+            "<cmd>lua require'telescope.builtin'.lsp_document_symbols(require('telescope.themes').get_dropdown({ previewer = true, symbol_width=60 }))<cr>",
+            desc = "Shows document symbols",
+        },
+        -- Old files are handled by smart open in fff.lua
+        --{ "<leader>gr", "<cmd>Telescope live_grep<CR>", desc = "Find texts" },
+        --{ "<leader>gw", "<cmd>Telescope grep_string<CR>", { silent = true, desc = "grep string under cursor" } },
+        {
+            "<leader>gr",
+            "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>",
+            { silent = true, desc = "grep string " },
+        },
+        {
+            "<leader>gw",
+            "<cmd>lua require('telescope-live-grep-args.shortcuts').grep_word_under_cursor()<cr>",
+            { silent = true, desc = "grep string under cursor" },
+        },
+        { "<leader>b", "<cmd>Telescope buffers<CR>", desc = "List Opened Buffers" },
+        { "<leader>T", "<cmd>Telescope treesitter<CR>", desc = "List Treesitter Variables" },
+        { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "Git status" },
+        { "<leader>gt", "<cmd>Telescope git_branches<CR>", desc = "Git branches" },
+        { "<leader>k", "<cmd>Telescope keymaps<CR>", desc = "List all keymaps" },
+    },
     config = function()
         local scope = require("telescope")
         local tactions = require("telescope.actions")
