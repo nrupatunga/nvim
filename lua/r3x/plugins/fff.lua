@@ -7,9 +7,23 @@ return {
             base_path = vim.fn.getcwd(),
             title = "Fast File Finder",
             prompt = " ", -- magnifying glass (Nerd Font)
-            max_results = 200,
-            max_threads = 8,
+            max_results = 100, -- Reduced for faster rendering
+            max_threads = 12, -- Increase if you have more cores
             lazy_sync = true,
+            debounce_ms = 50, -- Debounce input to reduce search churn
+            -- Ignore patterns for faster indexing
+            ignore_patterns = {
+                "%.git/",
+                "node_modules/",
+                "target/",
+                "build/",
+                "dist/",
+                "%.cache/",
+                "__pycache__/",
+                "%.pyc$",
+                "%.o$",
+                "%.so$",
+            },
             layout = {
                 height = 0.35,
                 width = 0.45,
@@ -91,7 +105,7 @@ return {
                 toggle_debug = "<F2>",
             },
             frecency = {
-                enabled = true,
+                enabled = false, -- Disable for faster startup (enable if you want smart ranking)
                 db_path = vim.fn.stdpath("cache") .. "/fff_nvim",
             },
             debug = {
@@ -99,9 +113,9 @@ return {
                 show_scores = false,
             },
             logging = {
-                enabled = true,
+                enabled = false, -- Disable logging for better performance
                 log_file = vim.fn.stdpath("log") .. "/fff.log",
-                log_level = "info",
+                log_level = "warn",
             },
         })
     end,
