@@ -204,32 +204,14 @@ vim.api.nvim_create_autocmd("VimEnter", {
             local empty = (vim.api.nvim_buf_line_count(bufnr) == 1)
                 and (vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] == "")
             if empty then
-                pcall(function()
-                    local ok_lazy, lazy = pcall(require, "lazy")
-                    if ok_lazy and lazy and lazy.load then
-                        pcall(lazy.load, { plugins = { "telescope.nvim" } })
-                    end
-                    local ok_b, builtin = pcall(require, "telescope.builtin")
-                    if not ok_b then return end
-                    local themes_ok, themes = pcall(require, "telescope.themes")
-                    local opts = {
-                        previewer = false,
-                        cwd_only = true,
-                        only_cwd = true,
-                        initial_mode = "insert",
-                        layout_config = { width = 0.45, height = 0.35 },
-                        -- Suppress error when no selection is made
-                        attach_mappings = function(_, map)
-                            local actions = require("telescope.actions")
-                            map("i", "<esc>", actions.close)
-                            map("n", "<esc>", actions.close)
-                            return true
-                        end,
-                    }
-                    if themes_ok then
-                        opts = themes.get_dropdown(opts)
-                    end
-                    pcall(builtin.oldfiles, opts)
+                vim.schedule(function()
+                    pcall(function()
+                        require("fzf-lua").oldfiles({
+                            cwd_only = true,
+                            previewer = false,
+                            winopts = { height = 0.35, width = 0.45 },
+                        })
+                    end)
                 end)
             end
         end
