@@ -5,10 +5,11 @@ return {
     config = function()
         require("fff").setup({
             base_path = vim.fn.getcwd(),
-            title = 'Fast File Finder',
+            title = "Fast File Finder",
             prompt = " ", -- magnifying glass (Nerd Font)
             max_results = 200,
             max_threads = 8,
+            lazy_sync = true,
             layout = {
                 height = 0.35,
                 width = 0.45,
@@ -103,7 +104,6 @@ return {
                 log_level = "info",
             },
         })
-        
     end,
     keys = {
         {

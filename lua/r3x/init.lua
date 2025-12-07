@@ -16,12 +16,12 @@ vim.notify = function(msg, level, opts)
     return original_notify(msg, level, opts)
 end
 
--- Enable Lua module loader cache (Neovim 0.9+)
-pcall(function()
-    if vim.loader and vim.loader.enable then
-        vim.loader.enable()
-    end
-end)
+-- Redirect cache to a writable path inside the config tree (sandbox-safe)
+do
+    local cache_home = vim.fn.stdpath("config") .. "/lua/r3x/.cache"
+    vim.env.XDG_CACHE_HOME = cache_home
+    pcall(vim.fn.mkdir, cache_home .. "/nvim/luac", "p")
+end
 
 require("r3x.options")
 require("r3x.keymaps")
