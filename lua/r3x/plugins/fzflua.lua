@@ -9,6 +9,7 @@ return {
                 require("fzf-lua").files({
                     cwd = vim.fn.getcwd(),
                     previewer = false,
+                    prompt = " > ",
                     winopts = { height = 0.35, width = 0.45 },
                 })
             end,
@@ -19,6 +20,7 @@ return {
             function()
                 require("fzf-lua").git_files({
                     previewer = false,
+                    prompt = " > ",
                     winopts = { height = 0.35, width = 0.45 },
                 })
             end,
@@ -30,6 +32,7 @@ return {
                 require("fzf-lua").oldfiles({
                     cwd_only = true,
                     previewer = false,
+                    prompt = " > ",
                     winopts = { height = 0.35, width = 0.45 },
                 })
             end,
@@ -40,6 +43,7 @@ return {
             function()
                 require("fzf-lua").marks({
                     previewer = false,
+                    prompt = " > ",
                     winopts = { height = 0.35, width = 0.45 },
                 })
             end,
@@ -77,6 +81,7 @@ return {
             function()
                 require("fzf-lua").buffers({
                     previewer = false,
+                    prompt = " > ",
                     winopts = { height = 0.35, width = 0.45 },
                 })
             end,
@@ -146,7 +151,7 @@ return {
                     flip_columns = 120,
                     title = true,
                     title_pos = "center",
-                    delay = 100,
+                    delay = 0, -- No delay, instant preview
                 },
             },
             keymap = {
@@ -182,11 +187,13 @@ return {
                 file_icons = true,
                 color_icons = true,
                 formatter = "path.filename_first",
+                cwd_header = false, -- Hide path in header
             },
             git = {
                 files = {
                     prompt = "  ",
                     formatter = "path.filename_first",
+                    cwd_header = false,
                 },
                 status = {
                     prompt = " ",
@@ -216,6 +223,7 @@ return {
             oldfiles = {
                 prompt = "  ",
                 formatter = "path.filename_first",
+                cwd_header = false,
             },
             marks = {
                 prompt = "  ",

@@ -48,9 +48,9 @@ return {
             },
         },
         explorer = { enabled = true },
-        indent = { enabled = true },
+        indent = { enabled = false }, -- Disable indent guide lines
         input = { enabled = true },
-        scope = { enabled = true },
+        scope = { enabled = false }, -- Disable scope highlighting
     },
     keys = {
         -- Lazygit
