@@ -27,16 +27,8 @@ require("r3x.options")
 require("r3x.keymaps")
 require("r3x.lazy")
 
--- Default colorscheme
---vim.cmd([[colorscheme kanagawa-dragon]])
---vim.cmd([[colorscheme vague]])
-vim.cmd([[colorscheme github_dark_high_contrast]])
---vim.cmd([[colorscheme murphy]])
---vim.cmd([[colorscheme gruvbox]])
---vim.cmd([[colorscheme night-owl]])
---vim.cmd([[colorscheme carbonfox]])
---if vim.g.colors_name == "night-owl" then
-vim.cmd([[highlight Comment cterm=italic gui=italic guifg=#838383]])
+-- Colorscheme is loaded by the VSCode plugin in themes.lua
+-- No manual colorscheme command needed here
 vim.cmd([[highlight LineNr guifg=#838383]])
 --end
 
@@ -195,9 +187,9 @@ vim.api.nvim_create_autocmd("VimEnter", {
     end,
 })
 
--- Open recent files picker on startup when no file was given
+-- Open find files picker on startup when no file was given
 vim.api.nvim_create_autocmd("VimEnter", {
-    group = vim.api.nvim_create_augroup("OpenRecentOnStart", { clear = true }),
+    group = vim.api.nvim_create_augroup("OpenFilesOnStart", { clear = true }),
     callback = function()
         if vim.fn.argc() == 0 then
             local bufnr = vim.api.nvim_get_current_buf()
@@ -206,8 +198,8 @@ vim.api.nvim_create_autocmd("VimEnter", {
             if empty then
                 vim.schedule(function()
                     pcall(function()
-                        require("fzf-lua").oldfiles({
-                            cwd_only = true,
+                        require("fzf-lua").files({
+                            cwd = vim.fn.getcwd(),
                             previewer = false,
                             winopts = { height = 0.35, width = 0.45 },
                         })
@@ -215,5 +207,21 @@ vim.api.nvim_create_autocmd("VimEnter", {
                 end)
             end
         end
+    end,
+})
+
+-- Ensure treesitter highlights are enabled after opening files from pickers
+vim.api.nvim_create_autocmd("BufRead", {
+    group = vim.api.nvim_create_augroup("EnsureTreesitterHighlight", { clear = true }),
+    callback = function(args)
+        vim.schedule(function()
+            local buf = args.buf
+            if vim.api.nvim_buf_is_valid(buf) then
+                -- Re-enable treesitter highlighting if it's not active
+                if not vim.treesitter.highlighter.active[buf] then
+                    pcall(vim.treesitter.start, buf)
+                end
+            end
+        end)
     end,
 })

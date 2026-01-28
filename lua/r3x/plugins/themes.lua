@@ -1,6 +1,18 @@
 return {
-    -- Active colorscheme: load early
-    { "nrupatunga/darkplus.nvim", priority = 1000, lazy = false },
+    -- Active colorscheme: VSCode Dark+ theme
+    { 
+        "Mofiqul/vscode.nvim", 
+        priority = 1000, 
+        lazy = false,
+        config = function()
+            require('vscode').setup({
+                transparent = vim.g.r3x_transparent or false,
+                italic_comments = true,
+                disable_nvimtree_bg = true,
+            })
+            vim.cmd.colorscheme('vscode')
+        end
+    },
 
     -- Other colorschemes: lazy so they don't impact startup
     { "ChristianChiarulli/onedark.nvim", lazy = true },
