@@ -198,9 +198,10 @@ vim.api.nvim_create_autocmd("VimEnter", {
             if empty then
                 vim.schedule(function()
                     pcall(function()
-                        require("fzf-lua").files({
-                            cwd = vim.fn.getcwd(),
+                        require("fzf-lua").oldfiles({
+                            cwd_only = true,
                             previewer = false,
+                            prompt = " > ",
                             winopts = { height = 0.35, width = 0.45 },
                         })
                     end)
