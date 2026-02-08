@@ -1,43 +1,13 @@
+-- fzf-lua: Used for grep, buffers, LSP, git status, etc.
+-- File finding is handled by fff.nvim (see fff.lua)
 return {
     "ibhagwan/fzf-lua",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     cmd = "FzfLua",
     keys = {
-        {
-            "<leader>f",
-            function()
-                require("fzf-lua").files({
-                    cwd = vim.fn.getcwd(),
-                    previewer = false,
-                    prompt = " > ",
-                    winopts = { height = 0.35, width = 0.45 },
-                })
-            end,
-            desc = "Find files",
-        },
-        {
-            "<leader>F",
-            function()
-                require("fzf-lua").git_files({
-                    previewer = false,
-                    prompt = " > ",
-                    winopts = { height = 0.35, width = 0.45 },
-                })
-            end,
-            desc = "Find git files",
-        },
-        {
-            "<leader>o",
-            function()
-                require("fzf-lua").oldfiles({
-                    cwd_only = true,
-                    previewer = false,
-                    prompt = " > ",
-                    winopts = { height = 0.35, width = 0.45 },
-                })
-            end,
-            desc = "Recent files",
-        },
+        -- NOTE: <leader>f and <leader>F are handled by fff.nvim
+        -- fff.nvim has built-in frecency, so <leader>o (oldfiles) is not needed
+        -- Recent files are automatically prioritized in fff.nvim's find_files()
         {
             "<leader>y",
             function()
