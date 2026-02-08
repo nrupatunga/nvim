@@ -6,18 +6,6 @@ return {
         {
             "<leader>f",
             function()
-                require("fzf-lua").files({
-                    cwd = vim.fn.getcwd(),
-                    previewer = false,
-                    prompt = " > ",
-                    winopts = { height = 0.35, width = 0.45 },
-                })
-            end,
-            desc = "Find files",
-        },
-        {
-            "<leader>F",
-            function()
                 require("fzf-lua").git_files({
                     previewer = false,
                     prompt = " > ",
@@ -25,6 +13,18 @@ return {
                 })
             end,
             desc = "Find git files",
+        },
+        {
+            "<leader>F",
+            function()
+                require("fzf-lua").files({
+                    cwd = vim.fn.getcwd(),
+                    previewer = false,
+                    prompt = " > ",
+                    winopts = { height = 0.35, width = 0.45 },
+                })
+            end,
+            desc = "Find files in cwd",
         },
         {
             "<leader>o",
