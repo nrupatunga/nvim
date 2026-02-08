@@ -188,6 +188,8 @@ vim.api.nvim_create_autocmd("VimEnter", {
 })
 
 -- Open find files picker on startup when no file was given
+-- fff.nvim needs its Rust backend to finish indexing before results appear.
+-- We defer the picker open to let the initial scan complete first.
 vim.api.nvim_create_autocmd("VimEnter", {
     group = vim.api.nvim_create_augroup("OpenFilesOnStart", { clear = true }),
     callback = function()
@@ -196,11 +198,26 @@ vim.api.nvim_create_autocmd("VimEnter", {
             local empty = (vim.api.nvim_buf_line_count(bufnr) == 1)
                 and (vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] == "")
             if empty then
-                vim.schedule(function()
+                -- Ensure the Rust backend is initialized and wait for scan
+                vim.defer_fn(function()
                     pcall(function()
-                        require("fff").find_files()
+                        local core = require("fff.core")
+                        core.ensure_initialized()
+                        local file_picker = require("fff.file_picker")
+                        -- Poll until scan completes (up to ~2s)
+                        local attempts = 0
+                        local function open_when_ready()
+                            local progress = file_picker.get_scan_progress()
+                            if not progress.is_scanning or attempts >= 20 then
+                                require("fff").find_files()
+                            else
+                                attempts = attempts + 1
+                                vim.defer_fn(open_when_ready, 100)
+                            end
+                        end
+                        open_when_ready()
                     end)
-                end)
+                end, 50) -- Small initial delay to let UIEnter init kick in
             end
         end
     end,
