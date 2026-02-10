@@ -2,6 +2,12 @@ return {
     {
         "williamboman/mason.nvim",
         event = { "BufReadPre", "BufNewFile" },
+        opts = {},
+    },
+    {
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
+        dependencies = { "williamboman/mason.nvim" },
+        event = { "BufReadPre", "BufNewFile" },
         opts = {
             ensure_installed = {
                 "prettierd",
@@ -9,6 +15,7 @@ return {
                 "clangd",
                 "clang-format",
             },
+            run_on_start = true,
         },
     },
     {
@@ -184,6 +191,9 @@ return {
                     formatting.isort,
                     formatting.clang_format.with({
                         extra_args = { "-style=file:" .. vim.fn.expand("/home/nthere/.clang-format") },
+                        condition = function()
+                            return vim.fn.executable("clang-format") == 1
+                        end,
                     }),
                     --diagnostics.flake8,
                 },
