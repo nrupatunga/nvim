@@ -81,6 +81,17 @@ M.setup = function()
     })
 
     vim.cmd([[autocmd FileType * set formatoptions-=ro]])
+
+    -- Auto-reload files when changed externally (e.g., by agents)
+    local reload_grp = vim.api.nvim_create_augroup("AutoReloadExternalChanges", { clear = true })
+    vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+        group = reload_grp,
+        callback = function()
+            if vim.fn.mode() ~= "c" then
+                vim.cmd("checktime")
+            end
+        end,
+    })
 end
 
 --local signature_cfg = {

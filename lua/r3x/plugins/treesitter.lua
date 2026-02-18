@@ -2,9 +2,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         event = { "BufReadPre" },
-        build = function()
-            require("nvim-treesitter.install").update({ with_sync = true })
-        end or ":TSUpdate",
+        build = ":TSUpdate",
         config = function()
             require("nvim-treesitter.config").setup({
                 ensure_installed = {
@@ -38,7 +36,7 @@ return {
                     "yaml",
                 },
                 autotag = { enable = true },
-                auto_install = false,
+                auto_install = true,
                 highlight = {
                     enable = true,
                     additional_vim_regex_highlighting = false,

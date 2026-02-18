@@ -9,6 +9,9 @@ return {
                 transparent = vim.g.r3x_transparent or false,
                 italic_comments = true,
                 disable_nvimtree_bg = true,
+                color_overrides = {
+                    vscBack = "#000000",
+                },
             })
             vim.cmd.colorscheme('vscode')
         end

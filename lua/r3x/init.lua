@@ -29,7 +29,6 @@ require("r3x.lazy")
 
 -- Colorscheme is loaded by the VSCode plugin in themes.lua
 -- No manual colorscheme command needed here
-vim.cmd([[highlight LineNr guifg=#838383]])
 --end
 
 -- Blink popup/win styling to match lualine command palette

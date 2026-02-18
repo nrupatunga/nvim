@@ -10,6 +10,7 @@ return {
         event = { "BufReadPre", "BufNewFile" },
         opts = {
             ensure_installed = {
+                "lua-language-server",
                 "prettierd",
                 "stylua",
                 "clangd",
@@ -21,6 +22,7 @@ return {
     {
         "neovim/nvim-lspconfig",
         dependencies = {
+            "williamboman/mason.nvim",
             --"ray-x/lsp_signature.nvim",
             "RRethy/vim-illuminate",
             config = function()
@@ -68,8 +70,12 @@ return {
             }
 
             for _, server in pairs(servers) do
+                local server_opts = vim.tbl_deep_extend("force", {}, opts) -- fresh copy
+
                 if server == "lua_ls" then
-                    local sumneko_opts = {
+                    local mason_lua_ls = vim.fn.stdpath("data") .. "/mason/bin/lua-language-server"
+                    server_opts = vim.tbl_deep_extend("force", server_opts, {
+                        cmd = vim.fn.executable(mason_lua_ls) == 1 and { mason_lua_ls } or { "lua-language-server" },
                         settings = {
                             Lua = {
                                 diagnostics = {
@@ -86,11 +92,9 @@ return {
                                 },
                             },
                         },
-                    }
-                    opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
-                end
-                if server == "jedi_language_server" then
-                    local pyright_opts = {
+                    })
+                elseif server == "jedi_language_server" then
+                    server_opts = vim.tbl_deep_extend("force", server_opts, {
                         settings = {
                             disableOrganizeImports = false,
                             python = {
@@ -100,11 +104,9 @@ return {
                                 },
                             },
                         },
-                    }
-                    opts = vim.tbl_deep_extend("force", pyright_opts, opts)
-                end
-                if server == "yamlls" then
-                    local yaml_opts = {
+                    })
+                elseif server == "yamlls" then
+                    server_opts = vim.tbl_deep_extend("force", server_opts, {
                         settings = {
                             yaml = {
                                 schemas = {
@@ -114,11 +116,10 @@ return {
                                 keyOrdering = false,
                             },
                         },
-                    }
-                    opts = vim.tbl_deep_extend("force", yaml_opts, opts)
+                    })
                 end
 
-                lspconfig[server].setup(opts)
+                lspconfig[server].setup(server_opts)
             end
 
             lspconfig["rust_analyzer"].setup({

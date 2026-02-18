@@ -24,7 +24,7 @@ local options = {
     showmode = false, -- no more --INSERT-- message on the screen
     --signcolumn = "yes", -- signcolumn always, if set to true
     signcolumn = "no", -- signcolumn always, if set to true
-    termguicolors = false,
+    termguicolors = true,
     textwidth = 72,
     updatetime = 300,
     visualbell = true, -- this is for visual flashy display of vim screen, use instead of sound
@@ -56,8 +56,6 @@ vim.cmd("highlight   Pmenu         ctermfg=0 ctermbg=2")
 vim.cmd("highlight   PmenuSel      ctermfg=0 ctermbg=7")
 vim.cmd("highlight   PmenuSbar     ctermfg=7 ctermbg=0")
 vim.cmd("highlight   PmenuThumb    ctermfg=0 ctermbg=7")
-vim.cmd("autocmd VimEnter * hi Normal ctermbg=NONE guibg=NONE")
-vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
 
 --vim.cmd(
 --[[command! -nargs=0 GoToFile lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({previewer = false }))]]
