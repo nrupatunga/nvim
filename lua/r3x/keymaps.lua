@@ -36,8 +36,20 @@ keymap("n", "<leader>yl", function()
     print("Copied: " .. result)
 end, { desc = "Copy filepath:line to clipboard" })
 
--- Visual mode mappings use command mode to ensure '< and '> marks are set
-keymap("x", "<leader>yl", ":<C-u>call setreg('+', expand('%:p') . ':' . line(\"'<\") . ':' . line(\"'>\"))<CR>:echo 'Copied: ' . getreg('+')<CR>", { desc = "Copy filepath:line1:line2 to clipboard" })
+-- Visual mode: smart single-line vs range detection
+keymap("x", "<leader>yl", function()
+    local filepath = vim.fn.expand("%:p")
+    local line1 = vim.fn.line("'<")
+    local line2 = vim.fn.line("'>")
+    local result
+    if line1 == line2 then
+        result = filepath .. ":" .. line1
+    else
+        result = filepath .. ":" .. line1 .. ":" .. line2
+    end
+    vim.fn.setreg("+", result)
+    print("Copied: " .. result)
+end, { desc = "Copy filepath:line or filepath:line1:line2 to clipboard" })
 
 -- copy filename with line number(s)
 keymap("n", "<leader>yf", function()
@@ -48,7 +60,19 @@ keymap("n", "<leader>yf", function()
     print("Copied: " .. result)
 end, { desc = "Copy filename:line to clipboard" })
 
-keymap("x", "<leader>yf", ":<C-u>call setreg('+', expand('%:t') . ':' . line(\"'<\") . ':' . line(\"'>\"))<CR>:echo 'Copied: ' . getreg('+')<CR>", { desc = "Copy filename:line1:line2 to clipboard" })
+keymap("x", "<leader>yf", function()
+    local filename = vim.fn.expand("%:t")
+    local line1 = vim.fn.line("'<")
+    local line2 = vim.fn.line("'>")
+    local result
+    if line1 == line2 then
+        result = filename .. ":" .. line1
+    else
+        result = filename .. ":" .. line1 .. ":" .. line2
+    end
+    vim.fn.setreg("+", result)
+    print("Copied: " .. result)
+end, { desc = "Copy filename:line or filename:line1:line2 to clipboard" })
 
 -- split resize
 keymap("n", "<C-Up>", ":resize -2<CR>", opts)
