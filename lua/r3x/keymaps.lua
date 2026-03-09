@@ -45,6 +45,24 @@ keymap("x", "<leader>yl", function()
     print("Copied: " .. result)
 end, { desc = "Copy filepath:line1:line2 to clipboard" })
 
+-- copy filename with line number(s)
+keymap("n", "<leader>yf", function()
+    local filename = vim.fn.expand("%:t")
+    local line = vim.fn.line(".")
+    local result = filename .. ":" .. line
+    vim.fn.setreg("+", result)
+    print("Copied: " .. result)
+end, { desc = "Copy filename:line to clipboard" })
+
+keymap("x", "<leader>yf", function()
+    local filename = vim.fn.expand("%:t")
+    local line1 = vim.fn.line("'<")
+    local line2 = vim.fn.line("'>")
+    local result = filename .. ":" .. line1 .. ":" .. line2
+    vim.fn.setreg("+", result)
+    print("Copied: " .. result)
+end, { desc = "Copy filename:line1:line2 to clipboard" })
+
 -- split resize
 keymap("n", "<C-Up>", ":resize -2<CR>", opts)
 keymap("n", "<C-Down>", ":resize +2<CR>", opts)
