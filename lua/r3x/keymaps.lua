@@ -27,6 +27,24 @@ keymap("x", "p", '"_dP', opts)
 keymap({ "n", "x" }, "<leader>yy", '"+y', opts) -- copy to system clipboard
 keymap({ "n", "x" }, "<leader>pp", '"+p', opts) -- paste from system clipboard
 
+-- copy filepath with line number(s)
+keymap("n", "<leader>yl", function()
+    local filepath = vim.fn.expand("%:p")
+    local line = vim.fn.line(".")
+    local result = filepath .. ":" .. line
+    vim.fn.setreg("+", result)
+    print("Copied: " .. result)
+end, { desc = "Copy filepath:line to clipboard" })
+
+keymap("x", "<leader>yl", function()
+    local filepath = vim.fn.expand("%:p")
+    local line1 = vim.fn.line("'<")
+    local line2 = vim.fn.line("'>")
+    local result = filepath .. ":" .. line1 .. ":" .. line2
+    vim.fn.setreg("+", result)
+    print("Copied: " .. result)
+end, { desc = "Copy filepath:line1:line2 to clipboard" })
+
 -- split resize
 keymap("n", "<C-Up>", ":resize -2<CR>", opts)
 keymap("n", "<C-Down>", ":resize +2<CR>", opts)
