@@ -33,23 +33,27 @@ keymap("n", "<leader>yl", function()
     local line = vim.fn.line(".")
     local result = filepath .. ":" .. line
     vim.fn.setreg("+", result)
-    print("Copied: " .. result)
+    vim.notify("Copied: " .. result, vim.log.levels.INFO)
 end, { desc = "Copy filepath:line to clipboard" })
 
 -- Visual mode: smart single-line vs range detection
 keymap("x", "<leader>yl", function()
+    local line1 = vim.fn.line("v")
+    local line2 = vim.fn.line(".")
+    if line1 > line2 then
+        line1, line2 = line2, line1
+    end
     local filepath = vim.fn.expand("%:p")
-    local line1 = vim.fn.line("'<")
-    local line2 = vim.fn.line("'>")
     local result
     if line1 == line2 then
         result = filepath .. ":" .. line1
     else
-        result = filepath .. ":" .. line1 .. ":" .. line2
+        result = filepath .. ":" .. line1 .. "-" .. line2
     end
     vim.fn.setreg("+", result)
-    print("Copied: " .. result)
-end, { desc = "Copy filepath:line or filepath:line1:line2 to clipboard" })
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+    vim.notify("Copied: " .. result, vim.log.levels.INFO)
+end, { desc = "Copy filepath:line or filepath:line1-line2 to clipboard" })
 
 -- copy filename with line number(s)
 keymap("n", "<leader>yf", function()
@@ -57,22 +61,28 @@ keymap("n", "<leader>yf", function()
     local line = vim.fn.line(".")
     local result = filename .. ":" .. line
     vim.fn.setreg("+", result)
-    print("Copied: " .. result)
+    vim.notify("Copied: " .. result, vim.log.levels.INFO)
 end, { desc = "Copy filename:line to clipboard" })
 
 keymap("x", "<leader>yf", function()
+    -- Get visual selection bounds (works while in visual mode)
+    local line1 = vim.fn.line("v")
+    local line2 = vim.fn.line(".")
+    if line1 > line2 then
+        line1, line2 = line2, line1
+    end
     local filename = vim.fn.expand("%:t")
-    local line1 = vim.fn.line("'<")
-    local line2 = vim.fn.line("'>")
     local result
     if line1 == line2 then
         result = filename .. ":" .. line1
     else
-        result = filename .. ":" .. line1 .. ":" .. line2
+        result = filename .. ":" .. line1 .. "-" .. line2
     end
     vim.fn.setreg("+", result)
-    print("Copied: " .. result)
-end, { desc = "Copy filename:line or filename:line1:line2 to clipboard" })
+    -- Exit visual mode
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+    vim.notify("Copied: " .. result, vim.log.levels.INFO)
+end, { desc = "Copy filename:line or filename:line1-line2 to clipboard" })
 
 -- split resize
 keymap("n", "<C-Up>", ":resize -2<CR>", opts)
