@@ -54,9 +54,15 @@ end
 
 local function floating_input(row, col, callback)
     local buf = vim.api.nvim_create_buf(false, true)
-    local width = 40
+    local parent_win = vim.api.nvim_get_current_win()
+    local win_w = vim.api.nvim_win_get_width(parent_win)
+    local win_h = vim.api.nvim_win_get_height(parent_win)
+    local width = math.min(40, win_w - 4)
+    col = math.max(0, math.min(col, win_w - width - 2))
+    row = math.max(0, math.min(row, win_h - 3))
     local win = vim.api.nvim_open_win(buf, true, {
         relative = "win",
+        win = parent_win,
         row = row,
         col = col,
         width = width,
@@ -68,6 +74,30 @@ local function floating_input(row, col, callback)
     })
     vim.bo[buf].buftype = "nofile"
     vim.cmd("startinsert")
+
+    -- grow/shrink the float as the user types, stays centered
+    local min_width = width
+    vim.api.nvim_create_autocmd({ "TextChangedI", "TextChanged" }, {
+        buffer = buf,
+        callback = function()
+            if not vim.api.nvim_win_is_valid(win) then
+                return true
+            end
+            local line = vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] or ""
+            local needed = math.max(min_width, #line + 2)
+            local max_width = win_w - 4
+            local new_width = math.min(needed, max_width)
+            local new_col = math.max(0, math.floor((win_w - new_width) / 2))
+            vim.api.nvim_win_set_config(win, {
+                relative = "win",
+                win = parent_win,
+                row = row,
+                col = new_col,
+                width = new_width,
+                height = 1,
+            })
+        end,
+    })
 
     local function close(submit)
         local lines = vim.api.nvim_buf_get_lines(buf, 0, 1, false)
@@ -110,16 +140,15 @@ local function send_visual_range()
     local u = require("r3x.utils")
     local l1, l2 = u.get_line_range()
     local ref = u.format_ref(vim.fn.expand("%:p"), l1, l2)
-    -- capture start of selection before exiting visual
     local row = l1
     u.exit_visual()
     vim.schedule(function()
         local win_width = vim.api.nvim_win_get_width(0)
-        local input_width = 40
+        local input_width = math.min(40, win_width - 4)
         local col = math.floor((win_width - input_width) / 2)
         floating_input(row - vim.fn.line("w0"), col, function(comment)
             if comment == nil then
-                return -- user cancelled
+                return
             end
             if comment ~= "" then
                 send(comment .. ": " .. ref)
@@ -135,10 +164,8 @@ return {
     virtual = true,
     event = "VeryLazy",
     config = function()
-        -- ,yc = comment + send (visual prompts for comment)
         vim.keymap.set("n", "<leader>yc", send_current_line, { noremap = true, silent = true, desc = "Send file:line to pi" })
         vim.keymap.set("x", "<leader>yc", send_visual_range, { noremap = true, silent = true, desc = "Send file:line range to pi (with comment)" })
-        -- ,yp = just paste, no comment prompt
         vim.keymap.set("n", "<leader>yp", send_current_line, { noremap = true, silent = true, desc = "Send file:line to pi" })
         vim.keymap.set("x", "<leader>yp", send_visual_paste, { noremap = true, silent = true, desc = "Send file:line range to pi (no comment)" })
     end,
