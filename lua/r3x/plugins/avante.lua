@@ -36,7 +36,9 @@ return {
             provider = "none", -- disable completion in avante
         },
     },
-    build = "make",
+    -- Avoid GitHub CLI release download issues on older gh versions.
+    -- Builds native libs locally instead of using gh release assets.
+    build = "make BUILD_FROM_SOURCE=true",
     dependencies = {
         "nvim-treesitter/nvim-treesitter",
         "nvim-lua/plenary.nvim",

@@ -4,7 +4,9 @@ return {
         event = { "BufReadPre" },
         build = ":TSUpdate",
         config = function()
-            require("nvim-treesitter.config").setup({
+            -- NOTE: Markdown injection workaround for Neovim 0.12-dev + nvim-treesitter.
+            -- See ~/.config/nvim/queries/markdown/injections.scm (remove once upstream fixes land).
+            require("nvim-treesitter.configs").setup({
                 ensure_installed = {
                     "bash",
                     "c",
