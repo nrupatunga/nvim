@@ -186,13 +186,13 @@ return {
                 git_icons = true,
                 file_icons = true,
                 color_icons = true,
-                formatter = "path.filename_first",
+                formatter = { "path.filename_first", 2 },
                 cwd_header = false, -- Hide path in header
             },
             git = {
                 files = {
                     prompt = "  ",
-                    formatter = "path.filename_first",
+                    formatter = { "path.filename_first", 2 },
                     cwd_header = false,
                 },
                 status = {
@@ -215,14 +215,14 @@ return {
             },
             buffers = {
                 prompt = "  ",
-                formatter = "path.filename_first",
+                formatter = { "path.filename_first", 2 },
                 actions = {
                     ["ctrl-x"] = { fn = actions.buf_del, reload = true },
                 },
             },
             oldfiles = {
                 prompt = "  ",
-                formatter = "path.filename_first",
+                formatter = { "path.filename_first", 2 },
                 cwd_header = false,
             },
             marks = {
