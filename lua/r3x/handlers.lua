@@ -88,6 +88,14 @@ end
 --},
 --}
 
+-- none-ls applies one fat TextEdit, which resets the window topline even
+-- when the cursor line number stays put. Restore the exact view.
+local function format_keep_view()
+    local view = vim.fn.winsaveview()
+    vim.lsp.buf.format({ timeout_ms = 5000 })
+    vim.fn.winrestview(view)
+end
+
 local function lsp_keymaps(bufnr)
     local opts = { noremap = true, silent = true }
     local keymap = vim.api.nvim_buf_set_keymap
@@ -97,8 +105,7 @@ local function lsp_keymaps(bufnr)
     keymap(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
     keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
     keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-    keymap(bufnr, "n", "<leader>lf", "<cmd>lua vim.lsp.buf.format({timeout_ms = 5000})<cr>", opts)
-    keymap(bufnr, "v", "<leader>lf", "<cmd>lua vim.lsp.buf.format({timeout_ms = 5000})<cr>", opts)
+    vim.keymap.set({ "n", "v" }, "<leader>lf", format_keep_view, { buffer = bufnr, silent = true })
     keymap(bufnr, "n", "<leader>li", "<cmd>LspInfo<cr>", opts)
     keymap(bufnr, "n", "<leader>lI", "<cmd>LspInstallInfo<cr>", opts)
     keymap(bufnr, "n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
